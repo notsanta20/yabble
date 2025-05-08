@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+html {
+  background-image: url("/assets/Gradient.svg");
+  background-size: cover;
+}
