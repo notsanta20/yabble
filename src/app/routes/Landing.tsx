@@ -1,11 +1,14 @@
 import { HeadingLarge } from "../../components/texts/Heading";
+import Button from "../../components/ui/buttons/Button";
 import IntroText from "../../components/texts/IntroText";
 
 function Landing() {
   return (
     <main className="flex flex-col h-screen p-3">
       <HeadingLarge />
-      <button className="flex-1">Get Started</button>
+      <div className="flex-1 flex justify-center items-center">
+        <Button url="/signup" name="GET STARTED" />
+      </div>
       <IntroText />
     </main>
   );
