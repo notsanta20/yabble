@@ -7,6 +7,7 @@ interface largeBtn {
 
 interface smallBtn {
   name: string;
+  isPending: boolean;
 }
 
 export function ButtonLarge({ url, name }: largeBtn) {
@@ -17,10 +18,14 @@ export function ButtonLarge({ url, name }: largeBtn) {
   );
 }
 
-export function ButtonSmall({ name }: smallBtn) {
+export function ButtonSmall({ name, isPending }: smallBtn) {
   return (
-    <button className="p-2 rounded-2xl font-[Syncopate] text-xl font-bold text-white border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-white) cursor-pointer">
-      {name}
+    <button className="p-2 rounded-2xl font-[Syncopate] text-xl font-bold text-white border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-white) cursor-pointer flex justify-center">
+      {isPending ? (
+        <img src="/assets/loaders/spinner.svg" alt="loader" />
+      ) : (
+        name
+      )}
     </button>
   );
 }
