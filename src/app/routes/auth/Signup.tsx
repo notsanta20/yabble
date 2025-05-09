@@ -1,49 +1,42 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import type { SignFormData } from "../../../types/types";
+import { signupSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import type { SignFormData } from "../../../types/types";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
 import signupApi from "../../../utils/apis/post/signupApi";
 import alert from "../../../components/ui/alert/alert";
 
-const schema = z
-  .object({
-    username: z
-      .string()
-      .min(3, { message: "username need to be at least 3 characters" }),
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(8, { message: "Password must be 8 or more characters long" }),
-    confirmPassword: z
-      .string()
-      .min(8, { message: "Password must be 8 or more characters long" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords are not matching",
-    path: ["confirmPassword"],
-  });
-
 function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(signupSchema),
   });
 
-  const { mutate, isPending, isError, data, error } = useMutation({
+  const { mutate, isPending, data, error } = useMutation({
     mutationFn: (data: SignFormData) => {
       return signupApi(data);
     },
   });
 
-  function onFormSubmit(data: SignFormData) {
-    mutate(data);
+  function onFormSubmit(formData: SignFormData) {
+    const lowerCasedData: SignFormData = {
+      username: formData.username.toLowerCase(),
+      email: formData.email.toLowerCase(),
+      password: formData.password.toLowerCase(),
+      confirmPassword: formData.confirmPassword.toLowerCase(),
+    };
+    mutate(lowerCasedData);
+    if (data) {
+      navigate("/login", { replace: true });
+    }
   }
 
   if (error) {
