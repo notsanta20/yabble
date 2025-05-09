@@ -1,59 +1,44 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import Cookies from "js-cookie";
+import type { LoginFormData } from "../../../types/types";
+import { loginSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import type { SignFormData } from "../../../types/types";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import signupApi from "../../../utils/apis/post/signupApi";
+import loginApi from "../../../utils/apis/post/loginApi";
 import alert from "../../../components/ui/alert/alert";
-import { useNavigate } from "react-router";
-
-const schema = z
-  .object({
-    username: z
-      .string()
-      .min(3, { message: "username need to be at least 3 characters" }),
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(8, { message: "Password must be 8 or more characters long" }),
-    confirmPassword: z
-      .string()
-      .min(8, { message: "Password must be 8 or more characters long" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords are not matching",
-    path: ["confirmPassword"],
-  });
 
 function Login() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(loginSchema),
   });
 
   const { mutate, isPending, data, error } = useMutation({
-    mutationFn: (data: SignFormData) => {
-      return signupApi(data);
+    mutationFn: (formData: LoginFormData) => {
+      return loginApi(formData);
     },
   });
 
-  function onFormSubmit(formData: SignFormData) {
-    const lowerCasedData: SignFormData = {
+  function onFormSubmit(formData: LoginFormData) {
+    const lowerCasedData: LoginFormData = {
       username: formData.username.toLowerCase(),
-      email: formData.email.toLowerCase(),
       password: formData.password.toLowerCase(),
-      confirmPassword: formData.confirmPassword.toLowerCase(),
     };
+
     mutate(lowerCasedData);
+
     if (data) {
-      navigate("/login", { replace: true });
+      Cookies.set("token", data.data.token);
+      navigate("/home", { replace: true });
     }
   }
 
@@ -71,19 +56,12 @@ function Login() {
           className="flex flex-col gap-2"
           onSubmit={handleSubmit(onFormSubmit)}
         >
-          <FormHeading text="SIGN UP" />
+          <FormHeading text="LOG IN" />
           <Input
             id="username"
             name="username"
             type="text"
             error={errors.username}
-            register={register}
-          />
-          <Input
-            id="email"
-            name="email"
-            type="text"
-            error={errors.email}
             register={register}
           />
           <Input
@@ -93,14 +71,7 @@ function Login() {
             error={errors.password}
             register={register}
           />
-          <Input
-            id="confirmPassword"
-            name="confirm password"
-            type="password"
-            error={errors.confirmPassword}
-            register={register}
-          />
-          <ButtonSmall name="Sign Up" isPending={isPending} />
+          <ButtonSmall name="Log In" isPending={isPending} />
         </form>
       </div>
     </main>

@@ -17,3 +17,12 @@ export const signupSchema = z
     message: "Passwords are not matching",
     path: ["confirmPassword"],
   });
+
+export const loginSchema = z.object({
+  username: z
+    .string()
+    .min(3, { message: "username need to be at least 3 characters" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be 8 or more characters long" }),
+});
