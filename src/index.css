@@ -12,3 +12,31 @@ html {
   background-image: url("/assets/Gradient.svg");
   background-size: cover;
 }
+
+.alert {
+  animation: alert 0.5s cubic-bezier(0, 1.7, 0.58, 1);
+  right: 30px;
+}
+
+.removeAlert {
+  animation: removeAlert 0.8s cubic-bezier(0.41, -0.73, 0.17, 1.71);
+  right: -400px;
+}
+
+@keyframes alert {
+  0% {
+    right: -400px;
+  }
+  100% {
+    right: 30px;
+  }
+}
+
+@keyframes removeAlert {
+  0% {
+    right: 30px;
+  }
+  100% {
+    right: -400px;
+  }
+}
