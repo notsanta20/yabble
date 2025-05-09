@@ -1,5 +1,5 @@
 import { HeadingLarge } from "../../components/texts/Heading";
-import Button from "../../components/ui/buttons/Button";
+import { ButtonLarge } from "../../components/ui/buttons/Button";
 import IntroText from "../../components/texts/IntroText";
 
 function Landing() {
@@ -7,7 +7,7 @@ function Landing() {
     <main className="flex flex-col h-screen p-3">
       <HeadingLarge />
       <div className="flex-1 flex justify-center items-center">
-        <Button url="/signup" name="GET STARTED" />
+        <ButtonLarge url="/signup" name="GET STARTED" />
       </div>
       <IntroText />
     </main>
