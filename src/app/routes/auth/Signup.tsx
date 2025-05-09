@@ -1,33 +1,95 @@
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
-import Button from "../../../components/ui/buttons/Button";
+import { ButtonSmall } from "../../../components/ui/buttons/Button";
+import type { SignFormData } from "../../../types/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import signupApi from "../../../utils/apis/post/signupApi";
+import alert from "../../../components/ui/alert/alert";
 
-const tempErr = null;
+const schema = z
+  .object({
+    username: z
+      .string()
+      .min(3, { message: "username need to be at least 3 characters" }),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, { message: "Password must be 8 or more characters long" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be 8 or more characters long" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords are not matching",
+    path: ["confirmPassword"],
+  });
 
 function Signup() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const { mutate, isPending, isError, data, error } = useMutation({
+    mutationFn: (data: SignFormData) => {
+      return signupApi(data);
+    },
+  });
+
+  function onFormSubmit(data: SignFormData) {
+    mutate(data);
+  }
+
+  if (error) {
+    alert(error.response.data.message);
+  }
+
   return (
-    <main className="flex flex-col items-center h-screen">
+    <main className="flex flex-col items-center h-screen p-3">
       <div className="self-start">
         <HeadingLarge />
       </div>
       <div className="h-full flex justify-center items-center">
-        <form className="flex flex-col gap-2">
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={handleSubmit(onFormSubmit)}
+        >
           <FormHeading text="SIGN UP" />
-          <Input id="username" name="username" type="text" error={tempErr} />
-          <Input id="email" name="email" type="text" error={tempErr} />
+          <Input
+            id="username"
+            name="username"
+            type="text"
+            error={errors.username}
+            register={register}
+          />
+          <Input
+            id="email"
+            name="email"
+            type="text"
+            error={errors.email}
+            register={register}
+          />
           <Input
             id="password"
             name="password"
             type="password"
-            error={tempErr}
+            error={errors.password}
+            register={register}
           />
           <Input
-            id="confirm-password"
+            id="confirmPassword"
             name="confirm password"
             type="password"
-            error={tempErr}
+            error={errors.confirmPassword}
+            register={register}
           />
-          <Button url="/login" name="Sign Up" />
+          <ButtonSmall name="Sign Up" isPending={isPending} />
         </form>
       </div>
     </main>
