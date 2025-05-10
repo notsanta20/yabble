@@ -4,8 +4,9 @@
   --glass-fill-dark: rgba(0, 0, 0, 0.18);
   --glass-fill-light: rgba(255, 255, 255, 0.1);
   --glass-border-dark: rgba(24, 24, 24, 0.24);
-  --glass-border-light: rgba(0, 0, 0, 0.24);
+  --glass-border-light: rgba(255, 255, 255, 0.24);
   --glass-blur: 5px;
+  --transparent: rgba(255, 255, 255, 0);
 }
 
 html {
