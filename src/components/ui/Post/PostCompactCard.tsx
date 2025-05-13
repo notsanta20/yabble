@@ -17,7 +17,11 @@ function PostCompact({ post }: { post: PostCompact }) {
         <h1 className="text-lg">{post.user.username}</h1>
         <h2 className="font-[dm_sans]">{post.title}</h2>
         <div className="flex gap-4">
-          <LikeButton id={post.id} likes={post._count.Likes} />
+          <LikeButton
+            id={post.id}
+            likes={post._count.Likes}
+            isLiked={post.Likes}
+          />
           <div className="flex gap-1">
             <img
               src="/assets/icons/comments.svg"
