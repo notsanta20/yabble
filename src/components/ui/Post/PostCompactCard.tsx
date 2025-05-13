@@ -17,7 +17,7 @@ function PostCompact({ post }: { post: PostCompact }) {
         <h1 className="text-lg">{post.user.username}</h1>
         <h2 className="font-[dm_sans]">{post.title}</h2>
         <div className="flex gap-4">
-          <div className="flex gap-2">
+          <div className="flex gap-2 cursor-pointer">
             <img
               src="/assets/icons/heart.svg"
               alt="like"
