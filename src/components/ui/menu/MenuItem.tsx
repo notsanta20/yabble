@@ -1,13 +1,28 @@
 import { Link } from "react-router";
 
-function MenuItem({ name, isSelected }: { name: string; isSelected: string }) {
+function MenuItem({
+  name,
+  url,
+  isSelected,
+  handleClick,
+}: {
+  name: string;
+  url: string;
+  isSelected: string;
+  handleClick: Function;
+}) {
   return (
-    <Link to={"/" + name}>
+    <Link
+      to={url}
+      onClick={() => {
+        handleClick(name);
+      }}
+    >
       <div
         className={
-          "flex gap-2 items-center p-2 rounded-2xl border-2 hover:border-(--glass-border-dark) hover:bg-(--glass-fill-dark) " +
+          "flex gap-2 items-center p-2 rounded-2xl border-2 hover:border-(--glass-border-light) hover:bg-(--glass-fill-light) " +
           (name === isSelected
-            ? "bg-(--glass-fill-dark) border-(--glass-border-dark)"
+            ? "bg-(--glass-fill-light) border-(--glass-border-light)"
             : "border-(--transparent)")
         }
       >

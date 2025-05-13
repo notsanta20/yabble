@@ -1,16 +1,47 @@
 import MenuItem from "./MenuItem";
 import { useState } from "react";
+import logout from "../../../utils/auth/logout";
 
-function Menu() {
-  const [isSelected, setIsSelected] = useState<string>("home");
+function Menu({ name }: { name: string }) {
+  const [isSelected, setIsSelected] = useState<string>(name);
 
-  function handleMenuItem() {}
+  function handleMenuItem(name: string) {
+    setIsSelected(name);
+  }
 
   return (
-    <div className="flex flex-col gap-1 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
-      <MenuItem name="home" isSelected={isSelected} />
-      <MenuItem name="find-friends" isSelected={isSelected} />
-    </div>
+    <aside className="self-start flex flex-col gap-1 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) p-2">
+      <MenuItem
+        name="home"
+        url="/home"
+        isSelected={isSelected}
+        handleClick={handleMenuItem}
+      />
+      <MenuItem
+        name="find-friends"
+        url="/find-friends"
+        isSelected={isSelected}
+        handleClick={handleMenuItem}
+      />
+      <MenuItem
+        name="messages"
+        url="/messages"
+        isSelected={isSelected}
+        handleClick={handleMenuItem}
+      />
+      <MenuItem
+        name="profile"
+        url="/profile"
+        isSelected={isSelected}
+        handleClick={handleMenuItem}
+      />
+      <MenuItem
+        name="logout"
+        url="/login"
+        isSelected={isSelected}
+        handleClick={logout}
+      />
+    </aside>
   );
 }
 
