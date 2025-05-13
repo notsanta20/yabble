@@ -1,6 +1,6 @@
-import type { BasicUser } from "../../../types/types";
+import type { BasicUser, FindFriendsUser } from "../../../types/types";
 
-function ProfilePic({ user }: { user: BasicUser }) {
+function ProfilePic({ user }: { user: BasicUser | FindFriendsUser }) {
   if (user.profilePic) {
     return (
       <div className=" rounded-full w-[25px] h-[25px] flex justify-center items-center">

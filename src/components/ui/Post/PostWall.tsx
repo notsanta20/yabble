@@ -2,6 +2,7 @@ import PostCompactCard from "./PostCompactCard";
 import type { PostCompact } from "../../../types/types";
 import { useQuery } from "@tanstack/react-query";
 import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
+import PostCompactLoader from "../loaders/PostCompactLoader";
 import alert from "../alert/alert";
 
 // const test: PostCompact = {
@@ -33,6 +34,13 @@ function PostWall() {
   });
 
   if (isPending) {
+    return (
+      <ul className="flex flex-col gap-2 px-10">
+        <PostCompactLoader />
+        <PostCompactLoader />
+        <PostCompactLoader />
+      </ul>
+    );
   }
 
   if (error) {

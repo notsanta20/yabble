@@ -5,15 +5,15 @@ import ActiveUsers from "../../../components/ui/users/ActiveUsers";
 
 function Home() {
   return (
-    <main className="flex flex-col gap-2 p-2 h-screen">
+    <main className="flex flex-col gap-2 p-2 h-dvh">
       <HeadingSmall />
-      <div className="flex-1 flex gap-2">
+      <section className="flex-1 flex flex-col-reverse md:flex-row gap-2">
         <Menu name="home" />
-        <div className="flex-1">
+        <article className="flex-auto">
           <PostWall />
-        </div>
+        </article>
         <ActiveUsers />
-      </div>
+      </section>
     </main>
   );
 }

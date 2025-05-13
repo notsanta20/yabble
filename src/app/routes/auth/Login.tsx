@@ -3,17 +3,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
-import type { LoginFormData } from "../../../types/types";
+import type { Header, LoginFormData } from "../../../types/types";
 import { loginSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import { loginApi } from "../../../utils/apis/postRequests";
+import { getHeader, loginApi } from "../../../utils/apis/postRequests";
 import alert from "../../../components/ui/alert/alert";
 
 function Login() {
   const navigate = useNavigate();
-
+  const header = getHeader();
   const {
     register,
     handleSubmit,
@@ -22,29 +22,29 @@ function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutate, isPending, data, error } = useMutation({
-    mutationFn: (formData: LoginFormData) => {
-      return loginApi(formData);
+  const login = useMutation({
+    mutationKey: ["login"],
+    mutationFn: ({ data, header }: { data: LoginFormData; header: Header }) => {
+      return loginApi(data, header);
     },
-    retry: false,
+    onSettled: (error) => {
+      if (error) {
+        alert(error.response.data.message);
+      }
+    },
+    onSuccess: (data) => {
+      Cookies.set("token", data.data.token);
+      navigate("/home", { replace: true });
+    },
   });
 
   function onFormSubmit(formData: LoginFormData) {
-    const lowerCasedData: LoginFormData = {
+    const data: LoginFormData = {
       username: formData.username.toLowerCase(),
       password: formData.password.toLowerCase(),
     };
 
-    mutate(lowerCasedData);
-  }
-
-  if (error) {
-    alert(error.response.data.message);
-  }
-
-  if (data) {
-    Cookies.set("token", data.data.token);
-    navigate("/home", { replace: true });
+    login.mutate({ data, header });
   }
 
   return (
@@ -72,7 +72,7 @@ function Login() {
             error={errors.password}
             register={register}
           />
-          <ButtonSmall name="Log In" isPending={isPending} />
+          <ButtonSmall name="Log In" isPending={login.isPending} />
         </form>
       </div>
     </main>
