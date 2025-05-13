@@ -3,7 +3,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Header } from "../../../types/types";
 import alert from "../alert/alert";
 
-function LikeButton({ id, likes }: { id: string; likes: number }) {
+function LikeButton({
+  id,
+  likes,
+  isLiked,
+}: {
+  id: string;
+  likes: number;
+  isLiked: Array<object>;
+}) {
   const queryClient = useQueryClient();
   const header = getHeader();
   const { mutate } = useMutation({
@@ -23,7 +31,10 @@ function LikeButton({ id, likes }: { id: string; likes: number }) {
   return (
     <div className="flex gap-2 cursor-pointer">
       <img
-        src="/assets/icons/heart.svg"
+        src={
+          "/assets/icons/" +
+          (isLiked.length > 0 ? "heartFilled.svg" : "heart.svg")
+        }
         alt="like"
         className="w-[22px] h-auto"
         onClick={() => {

@@ -21,6 +21,7 @@ export interface BasicUser {
 }
 
 export interface PostCompact {
+  Likes: Array<object>;
   id: string;
   title: string;
   description: string | null;
