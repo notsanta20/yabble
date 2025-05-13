@@ -8,7 +8,7 @@ import { loginSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import loginApi from "../../../utils/apis/post/loginApi";
+import { loginApi } from "../../../utils/apis/postRequests";
 import alert from "../../../components/ui/alert/alert";
 
 function Login() {
@@ -26,6 +26,7 @@ function Login() {
     mutationFn: (formData: LoginFormData) => {
       return loginApi(formData);
     },
+    retry: false,
   });
 
   function onFormSubmit(formData: LoginFormData) {
@@ -35,15 +36,15 @@ function Login() {
     };
 
     mutate(lowerCasedData);
-
-    if (data) {
-      Cookies.set("token", data.data.token);
-      navigate("/home", { replace: true });
-    }
   }
 
   if (error) {
     alert(error.response.data.message);
+  }
+
+  if (data) {
+    Cookies.set("token", data.data.token);
+    navigate("/home", { replace: true });
   }
 
   return (

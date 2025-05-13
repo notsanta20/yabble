@@ -7,7 +7,7 @@ import { signupSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import signupApi from "../../../utils/apis/post/signupApi";
+import { signupApi } from "../../../utils/apis/postRequests";
 import alert from "../../../components/ui/alert/alert";
 
 function Signup() {
