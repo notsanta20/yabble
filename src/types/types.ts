@@ -36,3 +36,13 @@ interface Count {
   Likes: number;
   Comments: number;
 }
+
+export interface FindFriendsUser {
+  id: string;
+  username: string;
+  profilePic: string | null;
+  myRequests: Array<object>;
+  userRequests: Array<object>;
+  myFriends: Array<object>;
+  followers: Array<object>;
+}
