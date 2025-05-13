@@ -1,16 +1,20 @@
 import ActiveUserLoader from "../loaders/ActiveUserLoader";
 import ActiveUserCard from "./ActiveUserCard";
 import { useQuery } from "@tanstack/react-query";
-import { activeUsersApi } from "../../../utils/apis/getRequests";
+import { getHeader, activeUsersApi } from "../../../utils/apis/getRequests";
 import type { BasicUser } from "../../../types/types";
 import { useNavigate } from "react-router";
 import alert from "../alert/alert";
 
 function ActiveUsers() {
   const navigate = useNavigate();
+  const header = getHeader();
+
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["activeUsers"],
-    queryFn: activeUsersApi,
+    queryKey: ["activeUsers", header],
+    queryFn: () => {
+      return activeUsersApi(header);
+    },
     refetchOnMount: true,
   });
 
