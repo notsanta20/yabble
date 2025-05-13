@@ -2,16 +2,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import type { SignFormData } from "../../../types/types";
+import type { Header, SignFormData } from "../../../types/types";
 import { signupSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
-import { signupApi } from "../../../utils/apis/postRequests";
+import { getHeader, signupApi } from "../../../utils/apis/postRequests";
 import alert from "../../../components/ui/alert/alert";
 
 function Signup() {
   const navigate = useNavigate();
+  const header = getHeader();
   const {
     register,
     handleSubmit,
@@ -20,27 +21,28 @@ function Signup() {
     resolver: zodResolver(signupSchema),
   });
 
-  const { mutate, isPending, data, error } = useMutation({
-    mutationFn: (data: SignFormData) => {
-      return signupApi(data);
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["signup"],
+    mutationFn: ({ data, header }: { data: SignFormData; header: Header }) => {
+      return signupApi(data, header);
+    },
+    onSettled: (error) => {
+      if (error) {
+        alert(error.response.data.message);
+      } else {
+        navigate("/login", { replace: true });
+      }
     },
   });
 
   function onFormSubmit(formData: SignFormData) {
-    const lowerCasedData: SignFormData = {
+    const data: SignFormData = {
       username: formData.username.toLowerCase(),
       email: formData.email.toLowerCase(),
       password: formData.password.toLowerCase(),
       confirmPassword: formData.confirmPassword.toLowerCase(),
     };
-    mutate(lowerCasedData);
-    if (data) {
-      navigate("/login", { replace: true });
-    }
-  }
-
-  if (error) {
-    alert(error.response.data.message);
+    mutate({ data, header });
   }
 
   return (
