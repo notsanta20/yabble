@@ -1,9 +1,9 @@
 import type { PostCompact } from "../../../types/types";
 import getPostTime from "../../../utils/getPostTime";
+import LikeButton from "../buttons/LikeButton";
 
 function PostCompact({ post }: { post: PostCompact }) {
   const time: string = getPostTime(post.time);
-
   return (
     <li className="flex gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-light) text-white font-[space_grotesk]">
       <div className="w-[80px] h-[60px] rounded-2xl">
@@ -17,14 +17,7 @@ function PostCompact({ post }: { post: PostCompact }) {
         <h1 className="text-lg">{post.user.username}</h1>
         <h2 className="font-[dm_sans]">{post.title}</h2>
         <div className="flex gap-4">
-          <div className="flex gap-2 cursor-pointer">
-            <img
-              src="/assets/icons/heart.svg"
-              alt="like"
-              className="w-[22px] h-auto"
-            />
-            <div>{post._count.Likes}</div>
-          </div>
+          <LikeButton id={post.id} likes={post._count.Likes} />
           <div className="flex gap-1">
             <img
               src="/assets/icons/comments.svg"
