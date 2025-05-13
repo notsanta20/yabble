@@ -26,3 +26,8 @@ export async function allPostsApi(header: Header) {
 
   return data;
 }
+
+export async function getAllUsersApi(header: Header) {
+  const data = await axios.get(`${url}/all-users`, header);
+  return data;
+}
