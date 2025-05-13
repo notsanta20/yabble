@@ -27,7 +27,7 @@ function ActiveUsers() {
   }
 
   return (
-    <section className="flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
+    <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
       <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
         Active users
       </h1>
@@ -46,7 +46,7 @@ function ActiveUsers() {
           ))}
         </ul>
       )}
-    </section>
+    </aside>
   );
 }
 
