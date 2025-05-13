@@ -1,17 +1,22 @@
 import { getHeader, addLikeApi } from "../../../utils/apis/putRequests";
-import { useMutation } from "@tanstack/react-query";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Header } from "../../../types/types";
+import alert from "../alert/alert";
 
 function LikeButton({ id, likes }: { id: string; likes: number }) {
   const queryClient = useQueryClient();
   const header = getHeader();
   const { mutate } = useMutation({
     mutationKey: ["addLike", header],
-    mutationFn: () => {
-      return addLikeApi(id, header);
+    mutationFn: ({ id, header }: { id: string; header: Header }) => {
+      return addLikeApi({ id, header });
     },
-    onSuccess: () => {
-      queryClient.setQueryData(["allPost"], header);
+    onSettled: (error) => {
+      if (error) {
+        alert(error.response.data.message);
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["allPost"] });
+      }
     },
   });
 
@@ -22,7 +27,7 @@ function LikeButton({ id, likes }: { id: string; likes: number }) {
         alt="like"
         className="w-[22px] h-auto"
         onClick={() => {
-          mutate(id, header);
+          mutate({ id, header });
         }}
       />
       <div>{likes}</div>

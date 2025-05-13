@@ -2,6 +2,11 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import type { Header } from "../../types/types";
 
+interface AddLikeProps {
+  id: string;
+  header: Header;
+}
+
 const url: string = "http://localhost:3000";
 
 export function getHeader() {
@@ -15,11 +20,11 @@ export function getHeader() {
   };
 }
 
-export async function addLikeApi(id: string, header: Header) {
+export async function addLikeApi(data: AddLikeProps) {
   const postData = {
-    postId: id,
+    postId: data.id,
   };
-  const data = await axios.put(`${url}/post/like`, postData, header);
+  const promise = await axios.put(`${url}/post/like`, postData, data.header);
 
-  return data;
+  return promise;
 }
