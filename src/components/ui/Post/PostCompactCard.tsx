@@ -1,11 +1,24 @@
 import type { PostCompact } from "../../../types/types";
 import getPostTime from "../../../utils/getPostTime";
+import CommentsCounter from "../buttons/CommentsCounter";
 import LikeButton from "../buttons/LikeButton";
+import { useNavigate } from "react-router";
 
 function PostCompact({ post }: { post: PostCompact }) {
   const time: string = getPostTime(post.time);
+  const navigate = useNavigate();
+
+  function handlePostClick(id: string) {
+    navigate(`/post/${id}`, { replace: true });
+  }
+
   return (
-    <li className="flex gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-light) text-white font-[space_grotesk]">
+    <li
+      className="flex gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-light) text-white font-[space_grotesk]"
+      onClick={() => {
+        handlePostClick(post.id);
+      }}
+    >
       <div className="w-[80px] h-[60px] rounded-2xl">
         <img
           src={post.image ? post.image : "/assets/icons/post.svg"}
@@ -22,14 +35,7 @@ function PostCompact({ post }: { post: PostCompact }) {
             likes={post._count.Likes}
             isLiked={post.Likes}
           />
-          <div className="flex gap-1">
-            <img
-              src="/assets/icons/comments.svg"
-              alt="comment"
-              className="w-[22px] h-auto"
-            />
-            <div>{post._count.Comments}</div>
-          </div>
+          <CommentsCounter comments={post._count.Comments} />
           <div className="flex gap-1">
             <img
               src="/assets/icons/time.svg"
