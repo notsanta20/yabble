@@ -26,3 +26,7 @@ export const loginSchema = z.object({
     .string()
     .min(8, { message: "Password must be 8 or more characters long" }),
 });
+
+export const commentSchema = z.object({
+  comment: z.string().min(1, { message: "comment cannot be empty" }),
+});
