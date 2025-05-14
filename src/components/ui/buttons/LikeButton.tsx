@@ -24,6 +24,7 @@ function LikeButton({
         alert(error.response.data.message);
       } else {
         queryClient.invalidateQueries({ queryKey: ["allPost"] });
+        queryClient.invalidateQueries({ queryKey: ["post"] });
       }
     },
   });
@@ -37,7 +38,8 @@ function LikeButton({
         }
         alt="like"
         className="w-[22px] h-auto"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           mutate({ id, header });
         }}
       />
