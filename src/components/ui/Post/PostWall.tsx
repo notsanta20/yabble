@@ -44,7 +44,17 @@ function PostWall() {
   }
 
   if (error) {
-    alert(error.response.data.message);
+    alert(error.response?.data.message);
+  }
+
+  if (typeof data === "undefined") {
+    return (
+      <div className="flex h-full items-center">
+        <h1 className="font-[Syncopate] font-bold text-sm text-white text-center">
+          Internal server error, failed to fetch posts.
+        </h1>
+      </div>
+    );
   }
 
   if (data) {
