@@ -6,6 +6,7 @@ import Home from "./routes/app/Home";
 import FindFriends from "./routes/app/FindFriends";
 import Messages from "./routes/app/Messages";
 import Profile from "./routes/app/Profile";
+import Post from "./routes/app/Post";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/find-friends" element={<FindFriends />} />
       <Route path="/messages" element={<Messages />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/post/:postId" element={<Post />} />
     </Routes>
   );
 }
