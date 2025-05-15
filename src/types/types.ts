@@ -2,6 +2,14 @@ export interface Header {
   headers: { Authorization: string };
 }
 
+export interface Error {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+}
+
 export interface SignFormData {
   username: string;
   email: string;
