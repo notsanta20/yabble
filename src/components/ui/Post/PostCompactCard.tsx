@@ -1,10 +1,10 @@
-import type { PostCompact } from "../../../types/types";
+import type { Post } from "../../../types/types";
 import getPostTime from "../../../utils/getPostTime";
 import CommentsCounter from "../buttons/CommentsCounter";
 import LikeButton from "../buttons/LikeButton";
 import { useNavigate } from "react-router";
 
-function PostCompact({ post }: { post: PostCompact }) {
+function PostCompact({ post }: { post: Post }) {
   const time: string = getPostTime(post.time);
   const navigate = useNavigate();
 
