@@ -20,18 +20,6 @@ export interface BasicUser {
   profilePic: string | null;
 }
 
-export interface PostCompact {
-  id: string;
-  title: string;
-  description: string | null;
-  image: string | null;
-  time: string;
-  userId: string;
-  _count: Count;
-  user: BasicUser;
-  Likes: Array<object>;
-}
-
 interface Count {
   Likes: number;
   Comments: number;
@@ -45,9 +33,16 @@ export interface Post {
   time: string;
   userId: string;
   _count: Count;
-  Likes: Array<object>;
-  Comments: Array<Comment>;
   user: BasicUser;
+  Likes: Array<Like>;
+  Comments?: Array<Comment>;
+}
+
+export interface Like {
+  id: string;
+  userId: string;
+  postId: string;
+  Posts?: Post;
 }
 
 export interface Comment {
@@ -57,6 +52,7 @@ export interface Comment {
   userId: string;
   postId: string;
   user: BasicUser;
+  Posts?: Post;
 }
 
 export interface FindFriendsUser {
@@ -71,4 +67,18 @@ export interface FindFriendsUser {
 
 export interface UserComment {
   comment: string;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  profilePic: string | null;
+  bio: string | null;
+  myRequests: Array<object>;
+  userRequests: Array<object>;
+  myFriends: Array<object>;
+  followers: Array<object>;
+  Posts: Array<Post>;
+  Likes: Array<Like>;
+  Comments: Array<Comment>;
 }

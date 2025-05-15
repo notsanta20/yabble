@@ -35,3 +35,11 @@ export async function getAllUsersApi(header: Header) {
 export async function getPostApi(header: Header, id: string) {
   return await axios.get(`${url}/post/${id}`, header);
 }
+
+export async function getCurrentUserApi(header: Header) {
+  return await axios.get(`${url}/current-user`, header);
+}
+
+export async function getUserApi(header: Header, userId: string) {
+  return await axios.get(`${url}/user/${userId}`, header);
+}

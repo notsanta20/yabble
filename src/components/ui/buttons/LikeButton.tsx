@@ -25,6 +25,7 @@ function LikeButton({
       } else {
         queryClient.invalidateQueries({ queryKey: ["allPost"] });
         queryClient.invalidateQueries({ queryKey: ["post"] });
+        queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       }
     },
   });
