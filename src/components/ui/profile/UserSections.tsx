@@ -5,9 +5,11 @@ function UserSection({ page, user }: { page: string; user: User }) {
   if (page === "Posts") {
     if (user.Posts.length === 0) {
       return (
-        <h1 className="font-[Syncopate] font-bold text-xs text-center text-white">
-          User has not posted anything
-        </h1>
+        <div className="h-full flex items-center justify-center">
+          <h1 className="font-[Syncopate] font-bold text-xs text-white">
+            User has not posted anything
+          </h1>
+        </div>
       );
     }
 
@@ -23,9 +25,11 @@ function UserSection({ page, user }: { page: string; user: User }) {
   if (page === "Likes") {
     if (user.Likes.length === 0) {
       return (
-        <h1 className="font-[Syncopate] font-bold text-xs text-white">
-          User has not Liked any post
-        </h1>
+        <div className="h-full flex items-center justify-center">
+          <h1 className="font-[Syncopate] font-bold text-xs text-white">
+            User has not Liked any post
+          </h1>
+        </div>
       );
     }
 
@@ -41,9 +45,11 @@ function UserSection({ page, user }: { page: string; user: User }) {
   if (page === "Comments") {
     if (user.Comments.length === 0) {
       return (
-        <h1 className="font-[Syncopate] font-bold text-xs text-white">
-          User has not posted any comments
-        </h1>
+        <div className="h-full flex items-center justify-center">
+          <h1 className="font-[Syncopate] font-bold text-xs text-white">
+            User has not posted any comments
+          </h1>
+        </div>
       );
     }
 
