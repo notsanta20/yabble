@@ -30,3 +30,7 @@ export const loginSchema = z.object({
 export const commentSchema = z.object({
   comment: z.string().min(1, { message: "comment cannot be empty" }),
 });
+
+export const BioSchema = z.object({
+  bio: z.string(),
+});

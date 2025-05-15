@@ -14,6 +14,10 @@ export interface LoginFormData {
   password: string;
 }
 
+export interface EditFormData {
+  bio: string;
+}
+
 export interface BasicUser {
   id: string;
   username: string;
