@@ -20,7 +20,10 @@ export function ButtonLarge({ url, name }: largeBtn) {
 
 export function ButtonSmall({ name, isPending }: smallBtn) {
   return (
-    <button className="p-2 rounded-2xl font-[Syncopate] text-xl font-bold text-white border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-white) cursor-pointer flex justify-center">
+    <button
+      className="p-2 rounded-2xl font-[Syncopate] text-xl font-bold text-white border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) hover:bg-(--glass-fill-white) cursor-pointer flex justify-center"
+      disabled={isPending}
+    >
       {isPending ? (
         <img src="/assets/loaders/spinner.svg" alt="loader" />
       ) : (
