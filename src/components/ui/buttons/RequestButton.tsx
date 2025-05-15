@@ -49,16 +49,18 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
   }
 
   if (user.followers.length > 0 || user.myFriends.length > 0) {
-    return <ButtonFunc text="FOLLOWING" />;
+    return <ButtonFunc text="FOLLOWING" isPending={false} />;
   }
 
   if (user.userRequests.length === 0 && user.myRequests.length === 0) {
     return (
       <ButtonFunc
         text="SEND REQUEST"
-        callback={() => {
+        callback={(e) => {
+          e.stopPropagation();
           handleSendRequest(user.id);
         }}
+        isPending={sendRequest.isPending}
       />
     );
   }
@@ -67,15 +69,17 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     return (
       <ButtonFunc
         text="ACCEPT REQUEST"
-        callback={() => {
+        callback={(e) => {
+          e.stopPropagation();
           handleAddFriend(user.id);
         }}
+        isPending={addFriend.isPending}
       />
     );
   }
 
   if (user.userRequests.length > 0) {
-    return <ButtonFunc text="REQUEST IS PENDING" />;
+    return <ButtonFunc text="REQUEST IS PENDING" isPending={false} />;
   }
 }
 
