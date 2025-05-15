@@ -11,7 +11,7 @@ function CommentsSection({ comments }: { comments: Array<CommentCard> }) {
   }
 
   return (
-    <ul className="flex-auto flex flex-col ga-2">
+    <ul className="flex-auto flex flex-col">
       {comments.map((comment) => (
         <CommentCard comment={comment} key={comment.id} />
       ))}
