@@ -1,17 +1,10 @@
 import Cookies from "js-cookie";
 import axios from "axios";
-import type { Header, UserComment } from "../../types/types";
-
-interface AddLikeProps {
-  id: string;
-  header: Header;
-}
-
-interface AddCommentsProps {
-  commentData: UserComment;
-  postId: string;
-  header: Header;
-}
+import type {
+  AddLikeProps,
+  AddCommentsProps,
+  EditBioProps,
+} from "../../types/types";
 
 const url: string = "http://localhost:3000";
 
@@ -41,4 +34,8 @@ export async function addCommentsApi(data: AddCommentsProps) {
     data.commentData,
     data.header
   );
+}
+
+export async function editBioApi(data: EditBioProps) {
+  return await axios.put(`${url}/edit-user`, data.editedData, data.header);
 }

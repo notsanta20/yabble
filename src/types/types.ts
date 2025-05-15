@@ -18,6 +18,26 @@ export interface EditFormData {
   bio: string;
 }
 
+export interface AddLikeProps {
+  id: string;
+  header: Header;
+}
+
+export interface AddCommentsProps {
+  commentData: UserComment;
+  postId: string;
+  header: Header;
+}
+
+interface Bio {
+  bio: string;
+}
+
+export interface EditBioProps {
+  editedData: Bio;
+  header: Header;
+}
+
 export interface BasicUser {
   id: string;
   username: string;
