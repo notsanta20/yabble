@@ -1,11 +1,15 @@
 import UserPic from "./UserPic";
 import ButtonFunc from "../buttons/ButtonFunc";
 import UserSection from "./UserSections";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getHeader, getCurrentUserApi } from "../../../utils/apis/getRequests";
 import { useQuery } from "@tanstack/react-query";
+import EditModal from "../modal/EditModal";
+import ProfileLoader from "../loaders/ProfileLoader";
 
 function MyProfile() {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+
   const [page, setPage] = useState("Posts");
   const header = getHeader();
 
@@ -20,7 +24,15 @@ function MyProfile() {
     setPage(e.target.textContent);
   }
 
-  function handleEdit() {}
+  function openEditModal() {
+    if (dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+  }
+
+  if (currentUser.isPending) {
+    return <ProfileLoader />;
+  }
 
   if (currentUser.data) {
     const userData = currentUser.data.data.data;
@@ -37,7 +49,11 @@ function MyProfile() {
                 {userData.bio}
               </p>
             </div>
-            <ButtonFunc text="Edit" callback={handleEdit} />
+            <ButtonFunc
+              text="Edit"
+              callback={openEditModal}
+              isPending={false}
+            />
           </div>
           <div className="min-w-[400px] grid grid-cols-3 gap-2">
             <ButtonFunc text="Posts" callback={updateView} page={page} />
@@ -48,6 +64,7 @@ function MyProfile() {
             <UserSection page={page} user={userData} />
           </div>
         </div>
+        <EditModal ref={dialogRef} />
       </section>
     );
   }
