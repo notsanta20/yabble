@@ -1,28 +1,9 @@
 import PostCompactCard from "./PostCompactCard";
-import type { PostCompact } from "../../../types/types";
+import type { Post } from "../../../types/types";
 import { useQuery } from "@tanstack/react-query";
 import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
 import PostCompactLoader from "../loaders/PostCompactLoader";
 import alert from "../alert/alert";
-
-// const test: PostCompact = {
-//   id: "testID",
-//   title:
-//     "Vikram Misri “It may be a surprise to Pakistan to see citizens criticising their own govt, cuz that is the hallmark of a functioning democracy” ",
-//   description: null,
-//   image: null,
-//   time: "2025-05-08T08:05:48.300Z",
-//   userId: "testststst",
-//   _count: {
-//     Likes: 1,
-//     Comments: 2,
-//   },
-//   user: {
-//     id: "asdfjalksdfjlk",
-//     username: "testUser",
-//     profilePic: null,
-//   },
-// };
 
 function PostWall() {
   const header = getHeader();
@@ -44,7 +25,7 @@ function PostWall() {
   }
 
   if (error) {
-    alert(error.response?.data.message);
+    alert(error.response.data.message);
   }
 
   if (typeof data === "undefined") {
@@ -61,7 +42,7 @@ function PostWall() {
     const allPosts = data.data.data;
     return (
       <ul className="min-h-0 flex flex-col gap-2 px-10 overflow-y-auto">
-        {allPosts.map((post: PostCompact) => (
+        {allPosts.map((post: Post) => (
           <PostCompactCard post={post} key={post.id} />
         ))}
       </ul>
