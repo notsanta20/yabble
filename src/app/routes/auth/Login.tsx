@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import Cookies from "js-cookie";
 import type { Header, LoginFormData } from "../../../types/types";
 import { loginSchema } from "../../../schema/schema";
@@ -73,6 +73,13 @@ function Login() {
             register={register}
           />
           <ButtonSmall name="Log In" isPending={login.isPending} />
+          <span className="text-white font-[space_grotesk] text-center">
+            Don't have an account ?
+            <Link to="/signup" className="italic underline">
+              {" "}
+              Signup
+            </Link>
+          </span>
         </form>
       </div>
     </main>
