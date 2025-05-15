@@ -1,4 +1,4 @@
-import type { FindFriendsUser, Header } from "../../../types/types";
+import type { FindFriendsUser, Header, User } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getHeader,
@@ -6,24 +6,9 @@ import {
   addFriendApi,
 } from "../../../utils/apis/postRequests";
 import alert from "../alert/alert";
+import ButtonFunc from "./ButtonFunc";
 
-function Button({ text, callback }: { text: string; callback?: Function }) {
-  return (
-    <button
-      className={
-        "font-[Syncopate] text-white text-xs font-bold p-3 rounded-2xl border-2 border-(--glass-border-light) " +
-        (callback && "hover:bg-(--glass-fill-light) cursor-pointer")
-      }
-      onClick={() => {
-        callback && callback();
-      }}
-    >
-      {text}
-    </button>
-  );
-}
-
-function RequestButton({ user }: { user: FindFriendsUser }) {
+function RequestButton({ user }: { user: FindFriendsUser | User }) {
   const queryClient = useQueryClient();
   const header = getHeader();
 
@@ -63,9 +48,13 @@ function RequestButton({ user }: { user: FindFriendsUser }) {
     addFriend.mutate({ id, header });
   }
 
+  if (user.followers.length > 0 || user.myFriends.length > 0) {
+    return <ButtonFunc text="FOLLOWING" />;
+  }
+
   if (user.userRequests.length === 0 && user.myRequests.length === 0) {
     return (
-      <Button
+      <ButtonFunc
         text="SEND REQUEST"
         callback={() => {
           handleSendRequest(user.id);
@@ -76,7 +65,7 @@ function RequestButton({ user }: { user: FindFriendsUser }) {
 
   if (user.myRequests.length > 0) {
     return (
-      <Button
+      <ButtonFunc
         text="ACCEPT REQUEST"
         callback={() => {
           handleAddFriend(user.id);
@@ -86,7 +75,7 @@ function RequestButton({ user }: { user: FindFriendsUser }) {
   }
 
   if (user.userRequests.length > 0) {
-    return <Button text="REQUEST IS PENDING" />;
+    return <ButtonFunc text="REQUEST IS PENDING" />;
   }
 }
 
