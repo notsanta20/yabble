@@ -7,27 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getHeader, getPostApi } from "../../../utils/apis/getRequests";
 import PostLoader from "../../../components/ui/loaders/PostLoader";
 
-// const test: Post = {
-//   id: "testID",
-//   title:
-//     "Vikram Misri “It may be a surprise to Pakistan to see citizens criticising their own govt, cuz that is the hallmark of a functioning democracy” ",
-//   description: null,
-//   image: null,
-//   time: "2025-05-08T08:05:48.300Z",
-//   userId: "testststst",
-//   _count: {
-//     Likes: 1,
-//     Comments: 2,
-//   },
-//   Likes: [],
-//   Comments: [],
-//   user: {
-//     id: "asdfjalksdfjlk",
-//     username: "testUser",
-//     profilePic: null,
-//   },
-// };
-
 function Post() {
   const { postId } = useParams();
   const header = getHeader();
