@@ -4,16 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import FindFriendLoader from "../loaders/FindFriendLoader";
 
 function FindFriendsWall() {
-  const test = {
-    id: "teasdfag",
-    username: "user1",
-    profilePic: null,
-    myRequests: [],
-    userRequests: [],
-    myFriends: [],
-    followers: [],
-  };
-
   const header = getHeader();
   const allUsers = useQuery({
     queryKey: ["allUsers"],
