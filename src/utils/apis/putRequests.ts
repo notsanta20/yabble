@@ -4,6 +4,7 @@ import type {
   AddLikeProps,
   AddCommentsProps,
   EditBioProps,
+  SendMessageProps,
 } from "../../types/types";
 
 const url: string = "http://localhost:3000";
@@ -38,4 +39,12 @@ export async function addCommentsApi(data: AddCommentsProps) {
 
 export async function editBioApi(data: EditBioProps) {
   return await axios.put(`${url}/edit-user`, data.editedData, data.header);
+}
+
+export async function sendMessageApi(data: SendMessageProps) {
+  return await axios.put(
+    `${url}/post/${data.postId}/add-comment`,
+    data.messageData,
+    data.header
+  );
 }
