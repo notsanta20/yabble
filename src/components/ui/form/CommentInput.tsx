@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { commentSchema } from "../../../schema/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Header, UserComment } from "../../../types/types";
+import type { Error, Header, UserComment } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getHeader, addCommentsApi } from "../../../utils/apis/putRequests";
 
@@ -30,7 +30,7 @@ function CommentInput({ postId }: { postId: string }) {
     }) => {
       return addCommentsApi({ commentData, postId, header });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       alert(error.response.data.message);
     },
     onSuccess: () => {
