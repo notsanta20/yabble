@@ -31,6 +31,10 @@ export const commentSchema = z.object({
   comment: z.string().min(1, { message: "comment cannot be empty" }),
 });
 
+export const messageSchema = z.object({
+  message: z.string().min(1, { message: "message cannot be empty" }),
+});
+
 export const BioSchema = z.object({
   bio: z.string(),
 });
