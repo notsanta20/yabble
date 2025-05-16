@@ -22,6 +22,7 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
         alert(error.response.data.message);
       } else {
         queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
       }
     },
   });
