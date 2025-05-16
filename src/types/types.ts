@@ -41,6 +41,12 @@ interface Bio {
   bio: string;
 }
 
+export interface SendMessageProps {
+  messageData: Message;
+  postId: string;
+  header: Header;
+}
+
 export interface EditBioProps {
   editedData: Bio;
   header: Header;
@@ -113,4 +119,26 @@ export interface User {
   Posts: Array<Post>;
   Likes: Array<Like>;
   Comments: Array<Comment>;
+}
+
+export interface Message {
+  message: string;
+}
+
+export interface FriendList {
+  id: string;
+  userA?: BasicUser;
+  userB?: BasicUser;
+  userAId: string;
+  userBId: string;
+}
+
+export interface Chat {
+  id: string;
+  message: string | null;
+  image: string | null;
+  time: string;
+  receiverId: string;
+  senderId: string;
+  contactId: string;
 }
