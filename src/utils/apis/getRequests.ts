@@ -43,3 +43,11 @@ export async function getCurrentUserApi(header: Header) {
 export async function getUserApi(header: Header, userId: string) {
   return await axios.get(`${url}/user/${userId}`, header);
 }
+
+export async function getFriendsList(header: Header) {
+  return await axios.get(`${url}/friends-list`, header);
+}
+
+export async function getMessages(header: Header, userId: string) {
+  return await axios.get(`${url}/messages/${userId}`, header);
+}
