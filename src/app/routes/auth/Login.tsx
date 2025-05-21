@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate, Link } from "react-router";
 import Cookies from "js-cookie";
-import type { Header, LoginFormData } from "../../../types/types";
+import type { Error, Header, LoginFormData } from "../../../types/types";
 import { loginSchema } from "../../../schema/schema";
 import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
@@ -27,7 +27,7 @@ function Login() {
     mutationFn: ({ data, header }: { data: LoginFormData; header: Header }) => {
       return loginApi(data, header);
     },
-    onSettled: (error) => {
+    onError: (error: Error) => {
       if (error) {
         alert(error.response.data.message);
       }
@@ -43,7 +43,6 @@ function Login() {
       username: formData.username.toLowerCase(),
       password: formData.password.toLowerCase(),
     };
-
     login.mutate({ data, header });
   }
 
