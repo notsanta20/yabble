@@ -4,7 +4,8 @@ import type {
   AddLikeProps,
   AddCommentsProps,
   EditBioProps,
-  SendMessageProps,
+  Header,
+  Message,
 } from "../../types/types";
 
 const url: string = "http://localhost:3000";
@@ -41,10 +42,21 @@ export async function editBioApi(data: EditBioProps) {
   return await axios.put(`${url}/edit-user`, data.editedData, data.header);
 }
 
-export async function sendMessageApi(data: SendMessageProps) {
-  return await axios.put(
-    `${url}/post/${data.postId}/add-comment`,
-    data.messageData,
-    data.header
-  );
+export async function sendMessageApi({
+  userId,
+  text,
+  image,
+  header,
+}: {
+  userId: string;
+  text: Message | undefined;
+  image: string | undefined;
+  header: Header;
+}) {
+  const data = {
+    receiverId: userId,
+    message: text?.message,
+    image: image,
+  };
+  return await axios.put(`${url}/messages`, data, header);
 }
