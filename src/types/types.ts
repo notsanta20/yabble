@@ -41,15 +41,15 @@ interface Bio {
   bio: string;
 }
 
-export interface SendMessageProps {
-  messageData: Message;
-  postId: string;
-  header: Header;
-}
-
 export interface EditBioProps {
   editedData: Bio;
   header: Header;
+}
+
+export interface ActiveUser {
+  id: string;
+  time: string;
+  user: BasicUser;
 }
 
 export interface BasicUser {
