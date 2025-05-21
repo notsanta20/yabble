@@ -2,7 +2,7 @@ import ActiveUserLoader from "../loaders/ActiveUserLoader";
 import ActiveUserCard from "./ActiveUserCard";
 import { useQuery } from "@tanstack/react-query";
 import { getHeader, activeUsersApi } from "../../../utils/apis/getRequests";
-import type { BasicUser } from "../../../types/types";
+import type { ActiveUser } from "../../../types/types";
 import { useNavigate } from "react-router";
 import alert from "../alert/alert";
 
@@ -10,7 +10,7 @@ function ActiveUsers() {
   const navigate = useNavigate();
   const header = getHeader();
 
-  const { isPending, isError, data, error } = useQuery({
+  const { isPending, data, error } = useQuery({
     queryKey: ["activeUsers", header],
     queryFn: () => {
       return activeUsersApi(header);
@@ -18,36 +18,66 @@ function ActiveUsers() {
     refetchOnMount: true,
   });
 
-  if (error) {
-    if (error.status === 401) {
-      alert("Login to view posts");
-      navigate("/login", { replace: true });
-      return;
-    }
+  if (isPending) {
+    return (
+      <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
+        <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
+          Active users
+        </h1>
+        <ActiveUserLoader />
+        <ActiveUserLoader />
+        <ActiveUserLoader />
+      </aside>
+    );
   }
 
-  return (
-    <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
-      <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
-        Active users
-      </h1>
-      {isPending && <ActiveUserLoader />}
-      {isPending && <ActiveUserLoader />}
-      {isPending && <ActiveUserLoader />}
-      {isError && (
+  if (error) {
+    const message = error.response.data.message;
+    alert(message);
+    navigate("/login", { replace: true });
+
+    return (
+      <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
+        <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
+          Active users
+        </h1>
         <h2 className="text-white font-[space_grotesk] text-center">
           Error in fetching users
         </h2>
-      )}
-      {data && (
+      </aside>
+    );
+  }
+
+  if (data) {
+    const userData = data.data.data;
+
+    if (userData.length === 0) {
+      return (
+        <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
+          <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
+            Active users
+          </h1>
+          <h2 className="text-white font-[space_grotesk] text-center">
+            No users are online
+          </h2>
+        </aside>
+      );
+    }
+
+    return (
+      <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
+        <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
+          Active users
+        </h1>
+
         <ul>
-          {data.data.data.map((d: BasicUser) => (
-            <ActiveUserCard user={d} key={d.id} />
+          {userData.map((user: ActiveUser) => (
+            <ActiveUserCard user={user.user} key={user.id} />
           ))}
         </ul>
-      )}
-    </aside>
-  );
+      </aside>
+    );
+  }
 }
 
 export default ActiveUsers;
