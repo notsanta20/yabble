@@ -10,6 +10,7 @@ import UserProfile from "./routes/app/UserProfile";
 import Post from "./routes/app/Post";
 import MessageDefaultPage from "../components/ui/message/MessageDefaultPage";
 import MessagePage from "../components/ui/message/MessagePage";
+import Error from "./routes/app/Error";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/user/:userId" element={<UserProfile />} />
       <Route path="/post/:postId" element={<Post />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 }
