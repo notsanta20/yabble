@@ -1,4 +1,9 @@
-import type { FindFriendsUser, Header, User } from "../../../types/types";
+import type {
+  Error,
+  FindFriendsUser,
+  Header,
+  User,
+} from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getHeader,
@@ -17,13 +22,14 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     mutationFn: ({ id, header }: { id: string; header: Header }) => {
       return sendRequestApi(id, header);
     },
-    onSettled: (error) => {
+    onError: (error: Error) => {
       if (error) {
         alert(error.response.data.message);
-      } else {
-        queryClient.invalidateQueries({ queryKey: ["allUsers"] });
-        queryClient.invalidateQueries({ queryKey: ["user"] });
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
@@ -32,12 +38,14 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     mutationFn: ({ id, header }: { id: string; header: Header }) => {
       return addFriendApi(id, header);
     },
-    onSettled: (error) => {
+    onError: (error: Error) => {
       if (error) {
         alert(error.response.data.message);
-      } else {
-        queryClient.invalidateQueries({ queryKey: ["allUsers"] });
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
