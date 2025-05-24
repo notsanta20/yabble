@@ -3,9 +3,9 @@ import axios from "axios";
 import type {
   AddLikeProps,
   AddCommentsProps,
-  EditBioProps,
   Header,
   Message,
+  Bio,
 } from "../../types/types";
 
 const url: string = "http://localhost:3000";
@@ -38,8 +38,14 @@ export async function addCommentsApi(data: AddCommentsProps) {
   );
 }
 
-export async function editBioApi(data: EditBioProps) {
-  return await axios.put(`${url}/edit-user`, data.editedData, data.header);
+export async function editBioApi({
+  editFormData,
+  header,
+}: {
+  editFormData: Bio;
+  header: Header;
+}) {
+  return await axios.put(`${url}/edit-user`, editFormData, header);
 }
 
 export async function sendMessageApi({

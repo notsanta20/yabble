@@ -16,7 +16,7 @@ function PostWall() {
 
   if (isPending) {
     return (
-      <ul className="flex flex-col gap-2 px-10">
+      <ul className="flex flex-col gap-2">
         <PostCompactLoader />
         <PostCompactLoader />
         <PostCompactLoader />
@@ -41,7 +41,7 @@ function PostWall() {
   if (data) {
     const allPosts = data.data.data;
     return (
-      <ul className="min-h-0 flex flex-col gap-2 px-10 overflow-y-auto">
+      <ul className="min-h-0 flex flex-col gap-2 overflow-y-auto">
         {allPosts.map((post: Post) => (
           <PostCompactCard post={post} key={post.id} />
         ))}

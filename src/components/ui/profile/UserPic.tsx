@@ -3,8 +3,12 @@ import type { User } from "../../../types/types";
 function UserPic({ user }: { user: User }) {
   if (user.profilePic) {
     return (
-      <div className=" rounded-full w-[100px] h-[100px] flex justify-center items-center">
-        <img src={user.profilePic} alt="profile-pic" />
+      <div className="w-[100px] h-[100px] flex justify-center items-center">
+        <img
+          src={user.profilePic}
+          alt="profile-pic"
+          className="rounded-full w-full h-full object-cover"
+        />
       </div>
     );
   }

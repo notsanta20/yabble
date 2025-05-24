@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { z } from "zod/v3";
+import type { SignFormData } from "../types/types";
 
 export const signupSchema = z
   .object({
@@ -13,7 +14,7 @@ export const signupSchema = z
       .string()
       .min(8, { message: "Password must be 8 or more characters long" }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data: SignFormData) => data.password === data.confirmPassword, {
     message: "Passwords are not matching",
     path: ["confirmPassword"],
   });
@@ -37,4 +38,14 @@ export const messageSchema = z.object({
 
 export const BioSchema = z.object({
   bio: z.string(),
+  profilePic: z.any().optional(),
+});
+
+export const postSchema = z.object({
+  title: z
+    .string()
+    .min(2, { message: "title need to be at least 2 characters" })
+    .max(30, { message: "title need to be below 30 characters" }),
+  description: z.string(),
+  img: z.any().optional(),
 });

@@ -8,7 +8,7 @@ interface props {
 
 function Input({ id, name, type, error, register }: props) {
   return (
-    <div className="flex flex-col gap-2 text-white font-[space_grotesk] w-[360px]">
+    <div className="flex flex-col gap-2 text-white font-[space_grotesk] w-full">
       <label htmlFor={id} className="px-2 text-xl">
         {name}
       </label>
