@@ -22,8 +22,10 @@ export interface LoginFormData {
   password: string;
 }
 
-export interface EditFormData {
-  bio: string;
+export interface PostFormData {
+  title: string;
+  description: string;
+  img: File | null;
 }
 
 export interface AddLikeProps {
@@ -37,8 +39,9 @@ export interface AddCommentsProps {
   header: Header;
 }
 
-interface Bio {
+export interface Bio {
   bio: string;
+  profilePic: File | null;
 }
 
 export interface EditBioProps {
