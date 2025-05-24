@@ -1,6 +1,11 @@
 import Cookies from "js-cookie";
 import axios from "axios";
-import type { Header, LoginFormData, SignFormData } from "../../types/types";
+import type {
+  Header,
+  LoginFormData,
+  PostFormData,
+  SignFormData,
+} from "../../types/types";
 
 const url: string = "http://localhost:3000";
 
@@ -42,5 +47,14 @@ export async function addFriendApi(userId: string, header: Header) {
     { receiverId: userId },
     header
   );
+  return data;
+}
+
+export async function createPostApi(
+  postFormData: PostFormData,
+  header: Header
+) {
+  const data = await axios.post(`${url}/create-post`, postFormData, header);
+
   return data;
 }
