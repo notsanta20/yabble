@@ -19,11 +19,11 @@ function PostCompact({ post }: { post: Post }) {
         handlePostClick(post.id);
       }}
     >
-      <div className="w-[80px] h-[60px] rounded-2xl">
+      <div className="w-[80px] h-[80px]">
         <img
           src={post.image ? post.image : "/assets/icons/post.svg"}
           alt="post-pic"
-          className="w-full"
+          className="w-full h-full object-cover rounded-2xl"
         />
       </div>
       <div className="flex-1 flex flex-col gap-1">
