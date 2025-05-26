@@ -6,10 +6,10 @@ function Profile() {
   return (
     <main className="flex flex-col gap-2 p-2 h-dvh">
       <HeadingSmall />
-      <div className="flex-1 flex gap-2">
+      <section className="flex-auto flex flex-col-reverse md:flex-row gap-2">
         <Menu name="profile" />
         <MyProfile />
-      </div>
+      </section>
     </main>
   );
 }

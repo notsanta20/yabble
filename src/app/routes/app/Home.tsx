@@ -19,7 +19,7 @@ function Home() {
       <HeadingSmall />
       <section className="flex-1 flex flex-col-reverse md:flex-row gap-2">
         <Menu name="home" />
-        <article className="flex-auto flex flex-col gap-2 px-10">
+        <article className="flex-auto flex flex-col gap-2 px-2 md:px-10">
           <button
             className="text-white text-sm font-[Syncopate] font-bold py-2 px-3 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) hover:cursor-pointer hover:bg-(--glass-fill-dark) hover:border(--glass-border-dark) outline-none"
             onClick={openModal}

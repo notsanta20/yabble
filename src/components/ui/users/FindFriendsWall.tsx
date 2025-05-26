@@ -14,8 +14,8 @@ function FindFriendsWall() {
 
   if (allUsers.isPending) {
     return (
-      <section className="flex-1 flex justify-center">
-        <ul className="h-full w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
+      <section className="flex-1 flex md:justify-center">
+        <ul className="h-full w-full md:w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
           <h1 className="text-white text-center font-bold font-[Syncopate] mb-2">
             Find Friends
           </h1>
@@ -29,8 +29,8 @@ function FindFriendsWall() {
 
   if (allUsers.error) {
     return (
-      <section className="flex-1 flex justify-center">
-        <ul className="h-full w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
+      <section className="flex-1 flex md:justify-center">
+        <ul className="h-full w-full md:w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
           <h1 className="text-white text-center font-bold font-[Syncopate] mb-2">
             Find Friends
           </h1>
@@ -48,8 +48,8 @@ function FindFriendsWall() {
   if (allUsers.data) {
     const data = allUsers.data.data.data;
     return (
-      <section className="flex-1 flex justify-center">
-        <ul className="h-full w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
+      <section className="flex-1 flex md:justify-center">
+        <ul className="h-full w-full md:w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
           <h1 className="text-white text-center font-bold font-[Syncopate] mb-2">
             Find Friends
           </h1>

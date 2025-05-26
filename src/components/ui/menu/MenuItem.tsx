@@ -31,7 +31,7 @@ function MenuItem({
           alt={name}
           className="w-[22px] h-auto"
         />
-        <h2 className="text-white text-xs font-[Syncopate] font-bold">
+        <h2 className="text-white text-xs font-[Syncopate] font-bold hidden md:block">
           {name}
         </h2>
       </div>

@@ -6,7 +6,7 @@ function FindFriends() {
   return (
     <main className="flex flex-col gap-2 p-2 h-dvh">
       <HeadingSmall />
-      <div className="flex-1 flex gap-2">
+      <div className="flex-1 flex flex-col-reverse md:flex-row gap-2">
         <Menu name="find-friends" />
         <FindFriendsWall />
       </div>

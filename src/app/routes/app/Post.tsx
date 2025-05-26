@@ -40,7 +40,7 @@ function Post() {
     return (
       <main className="flex flex-col gap-2 p-2 h-dvh">
         <HeadingSmall />
-        <section className="flex gap-2 h-full">
+        <section className="flex-1 flex flex-col-reverse md:flex-row gap-2">
           <Menu name="post" />
           <SinglePost post={post} />;
         </section>

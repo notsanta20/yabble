@@ -32,8 +32,8 @@ function MessageUsersWall() {
     const data = friends.data.data.data;
 
     return (
-      <aside>
-        <ul className="flex flex-col justify-center gap-2 p-2 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur)">
+      <aside className="flex-auto">
+        <ul className="max-sm:h-full flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur)">
           <h1 className="text-white text-sm text-center font-[Syncopate] font-bold">
             Friends
           </h1>

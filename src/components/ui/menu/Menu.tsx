@@ -10,7 +10,7 @@ function Menu({ name }: { name: string }) {
   }
 
   return (
-    <aside className="self-start flex flex-col gap-1 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) p-2">
+    <aside className="md:min-w-[190px] md:self-start flex md:flex-col justify-around md:justify-start gap-1 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) p-2">
       <MenuItem
         name="home"
         url="/home"
