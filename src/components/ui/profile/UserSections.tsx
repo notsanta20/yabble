@@ -14,11 +14,13 @@ function UserSection({ page, user }: { page: string; user: User }) {
     }
 
     return (
-      <ul className="flex flex-col gap-2 w-full">
-        {user.Posts.map((post) => (
-          <PostCompact post={post} key={post.id} />
-        ))}
-      </ul>
+      <div className="flex-auto overflow-auto">
+        <ul className="flex flex-col gap-2">
+          {user.Posts.map((post) => (
+            <PostCompact post={post} key={post.id} />
+          ))}
+        </ul>
+      </div>
     );
   }
 

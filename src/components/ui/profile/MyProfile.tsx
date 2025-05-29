@@ -37,7 +37,7 @@ function MyProfile() {
   if (currentUser.data) {
     const userData = currentUser.data.data.data;
     return (
-      <section className="flex-auto flex md:items-center md:justify-center text-white">
+      <section className="flex-auto flex md:items-center md:justify-center min-h-0 text-white">
         <div className="min-w-full md:min-w-[50%] h-full flex flex-col gap-5 py-3 px-2 md:px-15 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur)">
           <div className="md:min-w-[400px] flex gap-4 items-center mt-[30px] py-5 px-3 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark)">
             <UserPic user={userData} />
@@ -75,7 +75,7 @@ function MyProfile() {
               isPending={false}
             />
           </div>
-          <div className="md:min-w-[400px] flex-auto">
+          <div className="md:min-w-[400px] flex-auto min-h-0">
             <UserSection page={page} user={userData} />
           </div>
         </div>
