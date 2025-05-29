@@ -46,13 +46,13 @@ function Signup() {
   }
 
   return (
-    <main className="flex flex-col items-center h-screen p-3">
+    <main className="flex flex-col md:items-center h-dvh p-3">
       <div className="self-start">
         <HeadingLarge />
       </div>
-      <div className="h-full flex justify-center items-center">
+      <div className="h-full flex justify-center items-center ">
         <form
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 w-full md:w-[360px]"
           onSubmit={handleSubmit(onFormSubmit)}
         >
           <FormHeading text="SIGN UP" />
