@@ -130,10 +130,9 @@ export interface Message {
 
 export interface FriendList {
   id: string;
-  userA?: BasicUser;
-  userB?: BasicUser;
-  userAId: string;
-  userBId: string;
+  username: string;
+  profilePic: string;
+  isOnline: boolean;
 }
 
 export interface Chat {
