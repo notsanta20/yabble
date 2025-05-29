@@ -41,21 +41,13 @@ function PostWall() {
   if (data) {
     const allPosts = data.data.data;
     return (
-      <ul className="min-h-0 flex flex-col gap-2 overflow-y-auto">
+      <ul className="flex flex-col gap-2 overflow-y-auto post-container">
         {allPosts.map((post: Post) => (
           <PostCompactCard post={post} key={post.id} />
         ))}
       </ul>
     );
   }
-
-  // return (
-  //   <ul className=" flex flex-col gap-2 px-10 overflow-y-auto">
-  //     <PostCompactCard post={test} />
-  //     <PostCompactCard post={test} />
-  //     <PostCompactCard post={test} />
-  //   </ul>
-  // );
 }
 
 export default PostWall;

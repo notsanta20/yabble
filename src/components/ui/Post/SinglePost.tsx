@@ -16,8 +16,8 @@ function SinglePost({ post }: { post: Post }) {
   }
 
   return (
-    <article className="flex-auto flex justify-center">
-      <div className="flex flex-col gap-4 py-2 px-2 md:px-5 w-full md:w-[80%] text-white rounded-2xl border-2 border-(--glass-fill-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) font-[space_grotesk]">
+    <article className="flex-auto flex justify-center min-h-0">
+      <div className="flex flex-col gap-4 py-2 px-2 md:px-5 w-full md:w-[80%] text-white rounded-2xl border-2 border-(--glass-fill-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) font-[space_grotesk] overflow-auto single-post-container">
         <div className="flex gap-2 items-center">
           <ProfilePic user={post.user} />
           <h1 className="cursor-pointer" onClick={handleUser}>
