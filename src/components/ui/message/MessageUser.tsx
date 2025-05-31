@@ -6,10 +6,12 @@ function MessageUser({
   user,
   menu,
   handleUserMenuHighlight,
+  handlePageSelect,
 }: {
   user: FriendList;
   menu: string | null;
   handleUserMenuHighlight: Function;
+  handlePageSelect: Function;
 }) {
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ function MessageUser({
       }
       onClick={() => {
         handleUserMenuHighlight(user.username);
+        handlePageSelect();
         navigate(`/messages/${user.id}`, { replace: true });
       }}
     >
