@@ -5,7 +5,7 @@ import LikeButton from "../buttons/LikeButton";
 import CommentsCounter from "../buttons/CommentsCounter";
 import CommentInput from "../form/CommentInput";
 import CommentsSection from "./CommentsSection";
-import { replace, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 function SinglePost({ post }: { post: Post }) {
   const time: string = getPostTime(post.time);
