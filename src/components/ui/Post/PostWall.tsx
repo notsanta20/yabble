@@ -4,9 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
 import PostCompactLoader from "../loaders/PostCompactLoader";
 import alert from "../alert/alert";
+import socket from "../../../app/socket";
 
 function PostWall() {
   const header = getHeader();
+  const token = header.headers.Authorization;
+  socket.auth = { token };
+  socket.connect();
+
   const { isPending, data, error } = useQuery({
     queryKey: ["allPost", header],
     queryFn: () => {
@@ -39,6 +44,10 @@ function PostWall() {
   }
 
   if (data) {
+    if (data.data.auth) {
+    } else {
+    }
+
     const allPosts = data.data.data;
     return (
       <ul className="flex flex-col gap-2 overflow-y-auto post-container">
