@@ -42,7 +42,7 @@ function Post() {
         <HeadingSmall />
         <section className="flex-1 flex flex-col-reverse md:flex-row gap-2 min-h-0">
           <Menu name="post" />
-          <SinglePost post={post} />;
+          <SinglePost post={post} />
         </section>
       </main>
     );
