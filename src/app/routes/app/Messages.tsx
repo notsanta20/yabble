@@ -4,24 +4,39 @@ import MessageUsersWall from "../../../components/ui/message/MessageUsersWall";
 import { Outlet } from "react-router";
 import socket from "../../socket";
 import { getHeader } from "../../../utils/apis/getRequests";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 function Messages() {
+  const [isPageClicked, setIsPageClicked] = useState<boolean>(false);
+  const pageState = Cookies.get("messagePageState");
   const header = getHeader();
   const token = header.headers.Authorization;
   socket.auth = { token };
   socket.connect();
 
+  useEffect(() => {
+    setIsPageClicked(false);
+  }, []);
+
   return (
     <main className="flex flex-col gap-2 p-2 h-dvh">
       <HeadingSmall />
-      <div className="flex-auto flex gap-2 min-h-0">
-        <div className="max-sm:flex-auto flex flex-col-reverse md:flex-col gap-2">
-          <Menu name="messages" />
-          <MessageUsersWall />
+      <div className="flex-auto flex flex-col-reverse md:flex-row gap-2 min-h-0">
+        <Menu name="messages" />
+        <div className="flex-auto flex gap-2 overflow-auto">
+          <MessageUsersWall
+            isPageClicked={isPageClicked}
+            setIsPageClicked={setIsPageClicked}
+          />
+          <section
+            className={
+              "flex-auto md:flex gap-2 " + (isPageClicked ? "flex" : "hidden")
+            }
+          >
+            <Outlet context={[setIsPageClicked]} />
+          </section>
         </div>
-        <section className="flex-auto hidden md:flex gap-2">
-          <Outlet />
-        </section>
       </div>
     </main>
   );
