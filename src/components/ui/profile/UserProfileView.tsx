@@ -8,8 +8,11 @@ import { useQuery } from "@tanstack/react-query";
 import ProfileLoader from "../loaders/ProfileLoader";
 import { useParams } from "react-router";
 import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
+import alert from "../alert/alert";
 
 function UserProfileView() {
+  const navigate = useNavigate();
   const [page, setPage] = useState("Posts");
   const { userId } = useParams();
   const header = getHeader();
@@ -36,6 +39,12 @@ function UserProfileView() {
 
   if (user.data) {
     const userData = user.data.data.data;
+
+    if (!userData.data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
+    }
 
     return (
       <section className="flex-auto flex items-center md:justify-center text-white min-h-0">

@@ -5,8 +5,10 @@ import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
 import PostCompactLoader from "../loaders/PostCompactLoader";
 import alert from "../alert/alert";
 import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
 
 function PostWall() {
+  const navigate = useNavigate();
   const header = getHeader();
   const token = header.headers.Authorization;
   socket.auth = { token };
@@ -44,8 +46,10 @@ function PostWall() {
   }
 
   if (data) {
-    if (data.data.auth) {
-    } else {
+    if (!data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
     }
 
     const allPosts = data.data.data;

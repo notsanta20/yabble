@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import FindFriendLoader from "../loaders/FindFriendLoader";
 import type { FindFriendsUser } from "../../../types/types";
 import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
+import alert from "../alert/alert";
 
 function FindFriendsWall() {
+  const navigate = useNavigate();
   const header = getHeader();
   const token = header.headers.Authorization;
   socket.auth = { token };
@@ -53,6 +56,12 @@ function FindFriendsWall() {
 
   if (allUsers.data) {
     const data = allUsers.data.data.data;
+
+    if (!allUsers.data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
+    }
 
     if (data.length === 0) {
       return (

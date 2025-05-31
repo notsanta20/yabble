@@ -7,8 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import EditModal from "../modal/EditModal";
 import ProfileLoader from "../loaders/ProfileLoader";
 import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
+import alert from "../alert/alert";
 
 function MyProfile() {
+  const navigate = useNavigate();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [page, setPage] = useState("Posts");
   const header = getHeader();
@@ -39,6 +42,11 @@ function MyProfile() {
 
   if (currentUser.data) {
     const userData = currentUser.data.data.data;
+    if (!currentUser.data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
+    }
     return (
       <section className="flex-auto flex items-center md:justify-center text-white min-h-0">
         <div className="w-full md:min-w-[400px] md:max-w-[60%] h-full flex flex-col md:items-center gap-5 py-3 px-2 md:px-15 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur)">
