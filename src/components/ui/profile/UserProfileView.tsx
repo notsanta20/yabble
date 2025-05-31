@@ -40,7 +40,7 @@ function UserProfileView() {
   if (user.data) {
     const userData = user.data.data.data;
 
-    if (!userData.data.data.auth) {
+    if (!user.data.data.auth) {
       alert("login to view the page");
       navigate("/login", { replace: true });
       return;
