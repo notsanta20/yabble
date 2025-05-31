@@ -1,15 +1,17 @@
-import { useParams } from "react-router";
+import { useParams, useOutletContext } from "react-router";
 import MessageInput from "../form/MessageInput";
 import MessageCard from "./MessageCard";
 import type { Chat } from "../../../types/types";
 import socket from "../../../app/socket";
 import { useState, useEffect, useRef } from "react";
+import Cookies from "js-cookie";
 import {
   LeftMessageLoader,
   RightMessageLoader,
 } from "../loaders/MessageLoader";
 
 function MessageWall() {
+  const [setIsPageClicked] = useOutletContext();
   const { userId } = useParams();
   const [messages, setMessages] = useState<Array<Chat> | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
@@ -35,6 +37,11 @@ function MessageWall() {
       setMessages(newMessages);
     }
   });
+
+  function goBack() {
+    setIsPageClicked(false);
+    Cookies.remove("messagePageState");
+  }
 
   if (!messages) {
     return (
@@ -75,7 +82,16 @@ function MessageWall() {
     }
 
     return (
-      <div className="flex-auto flex flex-col gap-3 min-h-0">
+      <div className="flex-auto flex flex-col gap-2">
+        <div className="p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) text-white font-[space_grotesk] flex md:hidden">
+          <h1 className="flex-auto">Header</h1>
+          <button
+            className="w-[30px] cursor-pointer rotate-[-90deg] hover:scale-90"
+            onClick={goBack}
+          >
+            <img src={"/assets/icons/send.svg"} alt="add-comment" />
+          </button>
+        </div>
         <div
           ref={messagesRef}
           className="flex-auto min-h-0 overflow-auto message-container"
