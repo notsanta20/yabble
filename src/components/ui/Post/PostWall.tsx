@@ -4,9 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
 import PostCompactLoader from "../loaders/PostCompactLoader";
 import alert from "../alert/alert";
+import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
 
 function PostWall() {
+  const navigate = useNavigate();
   const header = getHeader();
+  const token = header.headers.Authorization;
+  socket.auth = { token };
+  socket.connect();
+
   const { isPending, data, error } = useQuery({
     queryKey: ["allPost", header],
     queryFn: () => {
@@ -39,23 +46,21 @@ function PostWall() {
   }
 
   if (data) {
+    if (!data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
+    }
+
     const allPosts = data.data.data;
     return (
-      <ul className="min-h-0 flex flex-col gap-2 overflow-y-auto">
+      <ul className="flex flex-col gap-2 overflow-y-auto post-container">
         {allPosts.map((post: Post) => (
           <PostCompactCard post={post} key={post.id} />
         ))}
       </ul>
     );
   }
-
-  // return (
-  //   <ul className=" flex flex-col gap-2 px-10 overflow-y-auto">
-  //     <PostCompactCard post={test} />
-  //     <PostCompactCard post={test} />
-  //     <PostCompactCard post={test} />
-  //   </ul>
-  // );
 }
 
 export default PostWall;

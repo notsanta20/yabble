@@ -12,10 +12,10 @@ function ButtonFunc({
   return (
     <button
       className={
-        "font-[Syncopate] text-white text-xs font-bold p-3 rounded-2xl border-2 border-(--glass-border-light) flex justify-center" +
+        "font-[Syncopate] text-white text-xs font-bold p-3 rounded-2xl border-2 border-(--glass-border-light) flex justify-center h-[45px]" +
         (callback ? " hover:bg-(--glass-fill-light) cursor-pointer" : "") +
         (page === text ? " bg-(--glass-fill-dark)" : "") +
-        (isPending ? " w-[100px]" : "")
+        (isPending ? " w-[150px]" : "")
       }
       onClick={(e) => {
         callback && callback(e);
@@ -26,7 +26,7 @@ function ButtonFunc({
         <img
           src="/assets/loaders/spinner.svg"
           alt="loader"
-          className="w-[20px] h-auto"
+          className="w-auto h-full"
         />
       ) : (
         text

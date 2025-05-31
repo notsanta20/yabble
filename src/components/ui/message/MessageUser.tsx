@@ -6,43 +6,38 @@ function MessageUser({
   user,
   menu,
   handleUserMenuHighlight,
+  handlePageSelect,
 }: {
   user: FriendList;
   menu: string | null;
   handleUserMenuHighlight: Function;
+  handlePageSelect: Function;
 }) {
   const navigate = useNavigate();
-  const userName: string = user.userA
-    ? user.userA.username
-    : user.userB
-    ? user.userB.username
-    : "blank";
-
-  const userId: string = user.userA
-    ? user.userA.id
-    : user.userB
-    ? user.userB.id
-    : "blank";
 
   return (
     <button
       className={
         "flex items-center gap-2 p-2 rounded-2xl border-2 cursor-pointer hover:bg-(--glass-fill-light) hover:border-(--glass-border-light)" +
-        (userName === menu
+        (user.username === menu
           ? " bg-(--glass-fill-light) border-(--glass-border-light)"
           : " border-(--transparent)")
       }
       onClick={() => {
-        handleUserMenuHighlight(userName);
-        navigate(`/messages/${userId}`, { replace: true });
+        handleUserMenuHighlight(user.username);
+        handlePageSelect();
+        navigate(`/messages/${user.id}`, { replace: true });
       }}
     >
-      {user.userA && <ProfilePic user={user.userA} />}
-      {user.userB && <ProfilePic user={user.userB} />}
+      {user && <ProfilePic user={user} />}
 
-      <h2 className="text-white text-sm font-[Syncopate] font-bold">
-        {userName}
+      <h2 className="text-white text-left text-sm font-[Syncopate] font-bold flex-1">
+        {user.username}
       </h2>
+      <img
+        src={"/assets/icons/" + (user.isOnline ? "online.svg" : "offline.svg")}
+        alt="online-status"
+      />
     </button>
   );
 }

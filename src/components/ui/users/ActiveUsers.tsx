@@ -1,24 +1,20 @@
 import ActiveUserLoader from "../loaders/ActiveUserLoader";
 import ActiveUserCard from "./ActiveUserCard";
-import { useQuery } from "@tanstack/react-query";
-import { getHeader, activeUsersApi } from "../../../utils/apis/getRequests";
-import type { ActiveUser } from "../../../types/types";
-import { useNavigate } from "react-router";
-import alert from "../alert/alert";
+import type { FriendList } from "../../../types/types";
+import socket from "../../../app/socket";
+import { useEffect, useState } from "react";
 
 function ActiveUsers() {
-  const navigate = useNavigate();
-  const header = getHeader();
+  const [users, setUsers] = useState<Array<FriendList> | null>(null);
 
-  const { isPending, data, error } = useQuery({
-    queryKey: ["activeUsers", header],
-    queryFn: () => {
-      return activeUsersApi(header);
-    },
-    refetchOnMount: true,
-  });
+  useEffect(() => {
+    socket.emit("getUsers");
+    socket.on("users", (data) => {
+      setUsers(data);
+    });
+  }, []);
 
-  if (isPending) {
+  if (!users) {
     return (
       <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
         <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
@@ -31,27 +27,8 @@ function ActiveUsers() {
     );
   }
 
-  if (error) {
-    const message = error.response.data.message;
-    alert(message);
-    navigate("/login", { replace: true });
-
-    return (
-      <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
-        <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
-          Active users
-        </h1>
-        <h2 className="text-white font-[space_grotesk] text-center">
-          Error in fetching users
-        </h2>
-      </aside>
-    );
-  }
-
-  if (data) {
-    const userData = data.data.data;
-
-    if (userData.length === 0) {
+  if (users) {
+    if (users.length === 0) {
       return (
         <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
           <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
@@ -71,9 +48,11 @@ function ActiveUsers() {
         </h1>
 
         <ul>
-          {userData.map((user: ActiveUser) => (
-            <ActiveUserCard user={user.user} key={user.id} />
-          ))}
+          {users.map((user: FriendList) => {
+            if (user.isOnline) {
+              return <ActiveUserCard user={user} key={user.id} />;
+            }
+          })}
         </ul>
       </aside>
     );

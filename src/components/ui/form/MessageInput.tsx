@@ -1,50 +1,45 @@
 import { useForm } from "react-hook-form";
 import { messageSchema } from "../../../schema/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Error, Header, Message } from "../../../types/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getHeader, sendMessageApi } from "../../../utils/apis/putRequests";
-import alert from "../alert/alert";
+import type { Chat, Message } from "../../../types/types";
+import socket from "../../../app/socket";
 
-function MessageInput({ userId }: { userId: string }) {
-  const header = getHeader();
-  const queryClient = useQueryClient();
+function MessageInput({
+  userId,
+  messages,
+  setMessages,
+}: {
+  userId: string;
+  messages: Array<Chat>;
+  setMessages: Function;
+}) {
   const {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(messageSchema),
   });
 
-  const message = useMutation({
-    mutationKey: ["message"],
-    mutationFn: ({
-      userId,
-      text,
-      image,
-      header,
-    }: {
-      userId: string;
-      text: Message | undefined;
-      image: string | undefined;
-      header: Header;
-    }) => {
-      return sendMessageApi({ userId, text, image, header });
-    },
-    onError: (error: Error) => {
-      alert(error.response.data.message);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["messages"] });
-    },
-  });
-
   function handleMessageSubmit(text: Message) {
     const image = undefined;
-    message.mutate({ userId, text, image, header });
+    socket.emit("sendMessage", { userId, text, image });
+    const newMessage = [...messages];
+    const time = new Date();
+    newMessage.push({
+      contactId: userId,
+      id: time.toString(),
+      image: null,
+      message: text.message,
+      receiverId: userId,
+      senderId: time.toString(),
+      time: time.toString(),
+    });
+    setMessages(newMessage);
     reset();
+    setFocus("message");
   }
 
   return (
@@ -55,24 +50,16 @@ function MessageInput({ userId }: { userId: string }) {
           type="text"
           name="message"
           placeholder="start chatting"
+          autoComplete="off"
           className="w-full rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) p-3 text-white font-[space_grotesk] outline-none text-sm"
         />
         <button
           className="absolute w-[30px] h-auto top-[50%] translate-y-[-50%] right-[10px] cursor-pointer hover:scale-90"
-          disabled={message.isPending}
+          disabled={errors.message ? true : false}
         >
-          <img
-            src={
-              "/assets/" +
-              (message.isPending ? "loaders/spinner.svg" : "icons/send.svg")
-            }
-            alt="add-comment"
-          />
+          <img src={"/assets/icons/send.svg"} alt="add-comment" />
         </button>
       </form>
-      <p className="text-sm text-red-600 font-[dm_sans] h-[20px] p-2">
-        {typeof errors.message === "undefined" ? "" : errors.message.message}
-      </p>
     </div>
   );
 }

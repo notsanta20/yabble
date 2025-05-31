@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import type { BasicUser } from "../../../types/types";
+import type { FriendList } from "../../../types/types";
 import ProfilePic from "./ProfilePic";
 
-function ActiveUserCard({ user }: { user: BasicUser }) {
+function ActiveUserCard({ user }: { user: FriendList }) {
   const navigate = useNavigate();
 
   function handleUser() {

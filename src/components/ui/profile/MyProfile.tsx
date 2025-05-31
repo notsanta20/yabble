@@ -6,12 +6,18 @@ import { getHeader, getCurrentUserApi } from "../../../utils/apis/getRequests";
 import { useQuery } from "@tanstack/react-query";
 import EditModal from "../modal/EditModal";
 import ProfileLoader from "../loaders/ProfileLoader";
+import socket from "../../../app/socket";
+import { useNavigate } from "react-router";
+import alert from "../alert/alert";
 
 function MyProfile() {
+  const navigate = useNavigate();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
-
   const [page, setPage] = useState("Posts");
   const header = getHeader();
+  const token = header.headers.Authorization;
+  socket.auth = { token };
+  socket.connect();
 
   const currentUser = useQuery({
     queryKey: ["currentUser"],
@@ -36,9 +42,14 @@ function MyProfile() {
 
   if (currentUser.data) {
     const userData = currentUser.data.data.data;
+    if (!currentUser.data.data.auth) {
+      alert("login to view the page");
+      navigate("/login", { replace: true });
+      return;
+    }
     return (
-      <section className="flex-auto flex md:items-center md:justify-center text-white">
-        <div className="min-w-full md:min-w-[50%] h-full flex flex-col gap-5 py-3 px-2 md:px-15 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur)">
+      <section className="flex-auto flex items-center md:justify-center text-white min-h-0">
+        <div className="w-full md:min-w-[400px] md:max-w-[60%] h-full flex flex-col md:items-center gap-5 py-3 px-2 md:px-15 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur)">
           <div className="md:min-w-[400px] flex gap-4 items-center mt-[30px] py-5 px-3 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark)">
             <UserPic user={userData} />
             <div className="flex-auto flex flex-col justify-around">
@@ -75,7 +86,7 @@ function MyProfile() {
               isPending={false}
             />
           </div>
-          <div className="md:min-w-[400px] flex-auto">
+          <div className="md:min-w-[400px] flex-auto min-h-0 overflow-auto">
             <UserSection page={page} user={userData} />
           </div>
         </div>

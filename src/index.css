@@ -13,6 +13,7 @@
 html {
   background-image: url("/assets/Gradient.svg");
   background-size: cover;
+  background-color: black;
 }
 
 .alert {
@@ -41,4 +42,11 @@ html {
   100% {
     right: -400px;
   }
+}
+
+.message-container,
+.request-container,
+.post-container,
+.single-post-container {
+  scrollbar-color: var(--glass-border-dark) var(--glass-border-light);
 }

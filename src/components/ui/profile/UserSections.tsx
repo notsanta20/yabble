@@ -14,7 +14,7 @@ function UserSection({ page, user }: { page: string; user: User }) {
     }
 
     return (
-      <ul className="flex flex-col gap-2 w-full">
+      <ul className="flex-auto flex flex-col gap-2 min-h-0 overflow-auto">
         {user.Posts.map((post) => (
           <PostCompact post={post} key={post.id} />
         ))}
@@ -34,7 +34,7 @@ function UserSection({ page, user }: { page: string; user: User }) {
     }
 
     return (
-      <ul className="flex flex-col gap-2 w-full">
+      <ul className="flex-auto flex flex-col gap-2 min-h-0 overflow-auto">
         {user.Likes.map((like) => {
           return like.Posts && <PostCompact post={like.Posts} key={like.id} />;
         })}
@@ -54,7 +54,7 @@ function UserSection({ page, user }: { page: string; user: User }) {
     }
 
     return (
-      <ul className="flex flex-col gap-2 w-full">
+      <ul className="flex-auto flex flex-col gap-2 min-h-0 overflow-auto">
         {user.Comments.map((comment) => {
           return (
             comment.Posts && (
