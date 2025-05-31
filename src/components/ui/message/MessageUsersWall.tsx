@@ -4,7 +4,6 @@ import alert from "../alert/alert";
 import MessageUser from "./MessageUser";
 import socket from "../../../app/socket";
 import ActiveUserLoader from "../loaders/ActiveUserLoader";
-import Cookies from "js-cookie";
 
 function MessageUsersWall({
   isPageClicked,
@@ -13,7 +12,6 @@ function MessageUsersWall({
   isPageClicked: boolean;
   setIsPageClicked: Function;
 }) {
-  const userMenuState = Cookies.get("userMenu");
   const [userMenu, setUserMenu] = useState<string | null>(null);
   const [users, setUsers] = useState<Array<FriendList> | null>(null);
 
@@ -22,9 +20,6 @@ function MessageUsersWall({
     socket.on("users", (data) => {
       setUsers(data);
     });
-    if (userMenuState) {
-      setUserMenu(userMenuState);
-    }
   }, []);
 
   socket.on("error", (error) => {
@@ -33,12 +28,10 @@ function MessageUsersWall({
 
   function handleUserMenuHighlight(name: string) {
     setUserMenu(name);
-    Cookies.set("userMenu", name);
   }
 
   function handlePageSelect() {
     setIsPageClicked(true);
-    Cookies.set("messagePageState", "cat");
   }
 
   if (!users) {

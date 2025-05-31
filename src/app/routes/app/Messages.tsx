@@ -5,11 +5,9 @@ import { Outlet } from "react-router";
 import socket from "../../socket";
 import { getHeader } from "../../../utils/apis/getRequests";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 
 function Messages() {
   const [isPageClicked, setIsPageClicked] = useState<boolean>(false);
-  const pageState = Cookies.get("messagePageState");
   const header = getHeader();
   const token = header.headers.Authorization;
   socket.auth = { token };

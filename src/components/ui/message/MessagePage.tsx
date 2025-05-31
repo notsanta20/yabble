@@ -1,25 +1,27 @@
 import { useParams, useOutletContext } from "react-router";
 import MessageInput from "../form/MessageInput";
 import MessageCard from "./MessageCard";
-import type { Chat } from "../../../types/types";
+import type { Chat, User } from "../../../types/types";
 import socket from "../../../app/socket";
 import { useState, useEffect, useRef } from "react";
-import Cookies from "js-cookie";
 import {
   LeftMessageLoader,
   RightMessageLoader,
 } from "../loaders/MessageLoader";
+import ProfilePic from "../users/ProfilePic";
 
 function MessageWall() {
   const [setIsPageClicked] = useOutletContext();
   const { userId } = useParams();
   const [messages, setMessages] = useState<Array<Chat> | null>(null);
+  const [receiverData, setReceiverData] = useState<User | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     socket.emit("getMessage", userId);
-    socket.on("receiveMessages", (data) => {
+    socket.on("receiveMessages", (data, receiverData) => {
       setMessages(data);
+      setReceiverData(receiverData);
     });
   }, [userId]);
 
@@ -40,7 +42,6 @@ function MessageWall() {
 
   function goBack() {
     setIsPageClicked(false);
-    Cookies.remove("messagePageState");
   }
 
   if (!messages) {
@@ -65,7 +66,7 @@ function MessageWall() {
     );
   }
 
-  if (messages && userId) {
+  if (messages && receiverData && userId) {
     if (messages.length === 0) {
       return (
         <section className="flex-auto flex flex-col gap-3">
@@ -83,8 +84,9 @@ function MessageWall() {
 
     return (
       <div className="flex-auto flex flex-col gap-2">
-        <div className="p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) text-white font-[space_grotesk] flex md:hidden">
-          <h1 className="flex-auto">Header</h1>
+        <div className="p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) text-white font-[space_grotesk] flex gap-2 items-center md:hidden">
+          <ProfilePic user={receiverData} />
+          <h1 className="flex-auto text-xl">{receiverData.username}</h1>
           <button
             className="w-[30px] cursor-pointer rotate-[-90deg] hover:scale-90"
             onClick={goBack}
@@ -96,7 +98,7 @@ function MessageWall() {
           ref={messagesRef}
           className="flex-auto min-h-0 overflow-auto message-container"
         >
-          <ul className="flex flex-col justify-end gap-3">
+          <ul className="flex flex-col gap-3">
             {messages.map((chat: Chat) => (
               <MessageCard chat={chat} receiverID={userId} key={chat.id} />
             ))}
