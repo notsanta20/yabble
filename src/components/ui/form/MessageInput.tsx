@@ -3,7 +3,6 @@ import { messageSchema } from "../../../schema/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Chat, Message } from "../../../types/types";
 import socket from "../../../app/socket";
-import { useRef } from "react";
 
 function MessageInput({
   userId,
@@ -18,11 +17,11 @@ function MessageInput({
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(messageSchema),
   });
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   function handleMessageSubmit(text: Message) {
     const image = undefined;
@@ -40,9 +39,7 @@ function MessageInput({
     });
     setMessages(newMessage);
     reset();
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    setFocus("message");
   }
 
   return (
@@ -50,7 +47,6 @@ function MessageInput({
       <form className="relative" onSubmit={handleSubmit(handleMessageSubmit)}>
         <input
           {...register("message")}
-          ref={inputRef}
           type="text"
           name="message"
           placeholder="start chatting"
