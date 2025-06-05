@@ -8,7 +8,8 @@ import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
 import { getHeader, signupApi } from "../../../utils/apis/postRequests";
-import alert from "../../../components/ui/alert/alert";
+import notification from "../../../components/ui/alert/notification";
+import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate();
@@ -26,12 +27,15 @@ function Signup() {
     mutationFn: ({ data, header }: { data: SignFormData; header: Header }) => {
       return signupApi(data, header);
     },
-    onSettled: (error) => {
-      if (error) {
-        alert(error.response.data.message);
-      } else {
-        navigate("/login", { replace: true });
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          notification(error.response.data.message);
+        }
       }
+    },
+    onSuccess: () => {
+      navigate("/login", { replace: true });
     },
   });
 

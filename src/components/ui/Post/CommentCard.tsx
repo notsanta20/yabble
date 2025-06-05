@@ -1,8 +1,8 @@
-import type { Comment as CommentCard } from "../../../types/types";
+import type { CommentData } from "../../../types/types";
 import getPostTime from "../../../utils/getPostTime";
 import ProfilePic from "../users/ProfilePic";
 
-function CommentCard({ comment }: { comment: CommentCard }) {
+function CommentCard({ comment }: { comment: CommentData }) {
   const time = getPostTime(comment.time);
 
   return (

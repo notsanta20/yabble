@@ -9,7 +9,7 @@ import ProfileLoader from "../loaders/ProfileLoader";
 import { useParams } from "react-router";
 import socket from "../../../app/socket";
 import { useNavigate } from "react-router";
-import alert from "../alert/alert";
+import axios from "axios";
 
 function UserProfileView() {
   const navigate = useNavigate();
@@ -29,22 +29,28 @@ function UserProfileView() {
     },
   });
 
-  function updateView(e) {
-    setPage(e.target.textContent);
+  function updateView(e: React.MouseEvent<HTMLButtonElement>) {
+    const text = e.target as HTMLButtonElement;
+    if (text.textContent) {
+      setPage(text.textContent);
+    }
   }
 
   if (user.isPending) {
     return <ProfileLoader />;
   }
 
+  if (axios.isAxiosError(user.error)) {
+    if (user.error.response) {
+      if (!user.error.response.data.auth) {
+        navigate("/login", { replace: true });
+        return;
+      }
+    }
+  }
+
   if (user.data) {
     const userData = user.data.data.data;
-
-    if (!user.data.data.auth) {
-      alert("login to view the page");
-      navigate("/login", { replace: true });
-      return;
-    }
 
     return (
       <section className="flex-auto flex items-center md:justify-center text-white min-h-0">

@@ -11,7 +11,7 @@ import {
 import ProfilePic from "../users/ProfilePic";
 
 function MessageWall() {
-  const [setIsPageClicked] = useOutletContext();
+  const setIsPageClicked: Function = useOutletContext();
   const { userId } = useParams();
   const [messages, setMessages] = useState<Array<Chat> | null>(null);
   const [receiverData, setReceiverData] = useState<User | null>(null);

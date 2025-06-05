@@ -1,11 +1,12 @@
 import { HeadingSmall } from "../../../components/texts/Heading";
 import Menu from "../../../components/ui/menu/Menu";
 import SinglePost from "../../../components/ui/Post/SinglePost";
-import type { Post } from "../../../types/types";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getHeader, getPostApi } from "../../../utils/apis/getRequests";
 import PostLoader from "../../../components/ui/loaders/PostLoader";
+import notification from "../../../components/ui/alert/notification";
+import axios from "axios";
 
 function Post() {
   const { postId } = useParams();
@@ -31,8 +32,10 @@ function Post() {
     );
   }
 
-  if (error) {
-    alert(error.response.data.message);
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      notification(error.response.data.message);
+    }
   }
 
   if (data) {

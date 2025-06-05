@@ -3,9 +3,9 @@ import type { Post } from "../../../types/types";
 import { useQuery } from "@tanstack/react-query";
 import { getHeader, allPostsApi } from "../../../utils/apis/getRequests";
 import PostCompactLoader from "../loaders/PostCompactLoader";
-import alert from "../alert/alert";
 import socket from "../../../app/socket";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 function PostWall() {
   const navigate = useNavigate();
@@ -31,8 +31,13 @@ function PostWall() {
     );
   }
 
-  if (error) {
-    alert(error.response.data.message);
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      if (!error.response.data.auth) {
+        navigate("/login", { replace: true });
+        return;
+      }
+    }
   }
 
   if (typeof data === "undefined") {
@@ -47,7 +52,6 @@ function PostWall() {
 
   if (data) {
     if (!data.data.auth) {
-      alert("login to view the page");
       navigate("/login", { replace: true });
       return;
     }

@@ -7,7 +7,7 @@ import { postSchema } from "../../../schema/schema";
 import type { Error, Header, PostFormData } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getHeader, createPostApi } from "../../../utils/apis/postRequests";
-import alert from "../alert/alert";
+import notification from "../alert/notification";
 
 function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
   const queryClient = useQueryClient();
@@ -29,13 +29,13 @@ function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
       postFormData,
       header,
     }: {
-      postFormData: PostFormData;
+      postFormData: FormData;
       header: Header;
     }) => {
       return createPostApi(postFormData, header);
     },
     onError: (error: Error) => {
-      alert(error.response.data.message);
+      notification(error.response.data.message);
       reset();
       closeModal();
     },
@@ -64,8 +64,9 @@ function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
     const postFormData = new FormData();
     postFormData.append("title", data.title);
     postFormData.append("description", data.description);
-    postFormData.append("img", image);
-
+    if (image) {
+      postFormData.append("img", image);
+    }
     postData.mutate({ postFormData, header });
   }
 
@@ -110,9 +111,6 @@ function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
           accept="image/png, image/jpg"
           className="font-[space_grotesk] p-2 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) outline-none focus:bg-(--glass-fill-white)"
         />
-        <div className="px-2 text-red-400 h-[30px]">
-          {typeof errors.img === "undefined" ? "" : errors.img.message}
-        </div>
         <ButtonSmall name="Add Post" isPending={postData.isPending} />
       </form>
     </dialog>

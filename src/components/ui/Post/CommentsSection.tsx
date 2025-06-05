@@ -1,7 +1,7 @@
-import type { Comment } from "../../../types/types";
+import type { CommentData } from "../../../types/types";
 import CommentCard from "./CommentCard";
 
-function CommentsSection({ comments }: { comments: Array<CommentCard> }) {
+function CommentsSection({ comments }: { comments: Array<CommentData> }) {
   if (comments.length === 0) {
     return (
       <h2 className="flex-auto flex items-center justify-center text-white font-[Syncopate] text-xs font-bold">

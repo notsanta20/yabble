@@ -17,7 +17,7 @@ function ButtonFunc({
         (page === text ? " bg-(--glass-fill-dark)" : "") +
         (isPending ? " w-[150px]" : "")
       }
-      onClick={(e) => {
+      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         callback && callback(e);
       }}
       disabled={isPending}

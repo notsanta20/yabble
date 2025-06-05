@@ -39,7 +39,7 @@ function SinglePost({ post }: { post: Post }) {
           <CommentsCounter comments={post._count.Comments} />
         </div>
         <CommentInput postId={post.id} />
-        <CommentsSection comments={post.Comments} />
+        <CommentsSection comments={post.Comments!} />
       </div>
     </article>
   );

@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BioSchema } from "../../../schema/schema";
 import { ButtonSmall } from "../buttons/Button";
 import { useRef, useState, type ChangeEvent, type RefObject } from "react";
-import type { Bio, Error } from "../../../types/types";
+import type { Bio, Error, Header } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getHeader, editBioApi } from "../../../utils/apis/putRequests";
-import alert from "../alert/alert";
+import notification from "../alert/notification";
 
 function EditModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
   const [image, setImage] = useState<File | null>(null);
@@ -31,13 +31,13 @@ function EditModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
       editFormData,
       header,
     }: {
-      editFormData: Bio;
+      editFormData: FormData;
       header: Header;
     }) => {
       return editBioApi({ editFormData, header });
     },
     onError: (error: Error) => {
-      alert(error.response.data.message);
+      notification(error.response.data.message);
       reset();
       closeModal();
     },
@@ -69,9 +69,14 @@ function EditModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
   function handleEdit(editedData: Bio) {
     const editFormData = new FormData();
     editFormData.append("bio", editedData.bio);
-    editFormData.append("profilePic", image);
-
+    if (image) {
+      editFormData.append("profilePic", image);
+    }
     editBio.mutate({ editFormData, header });
+
+    if (inputLabelRef.current) {
+      inputLabelRef.current.textContent = "Select Profile Pic";
+    }
   }
 
   return (
@@ -106,12 +111,6 @@ function EditModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
           accept="image/png, image/jpg"
           className="hidden"
         />
-        <div className="px-2 text-red-400 h-[30px]">
-          {typeof errors.profilePic === "undefined"
-            ? ""
-            : errors.profilePic.message}
-        </div>
-
         <ButtonSmall name="update" isPending={editBio.isPending} />
       </form>
     </dialog>

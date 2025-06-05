@@ -25,7 +25,7 @@ export interface LoginFormData {
 export interface PostFormData {
   title: string;
   description: string;
-  img: File | null;
+  img?: File | null;
 }
 
 export interface AddLikeProps {
@@ -41,7 +41,7 @@ export interface AddCommentsProps {
 
 export interface Bio {
   bio: string;
-  profilePic: File | null;
+  profilePic?: File | null;
 }
 
 export interface EditBioProps {
@@ -76,7 +76,7 @@ export interface Post {
   _count: Count;
   user: BasicUser;
   Likes: Array<Like>;
-  Comments?: Array<Comment>;
+  Comments?: Array<CommentData>;
 }
 
 export interface Like {
@@ -86,7 +86,7 @@ export interface Like {
   Posts?: Post;
 }
 
-export interface Comment {
+export interface CommentData {
   id: string;
   comment: string;
   time: string;
@@ -121,7 +121,7 @@ export interface User {
   followers: Array<object>;
   Posts: Array<Post>;
   Likes: Array<Like>;
-  Comments: Array<Comment>;
+  Comments: Array<CommentData>;
 }
 
 export interface Message {

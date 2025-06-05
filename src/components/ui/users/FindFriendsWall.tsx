@@ -5,7 +5,7 @@ import FindFriendLoader from "../loaders/FindFriendLoader";
 import type { FindFriendsUser } from "../../../types/types";
 import socket from "../../../app/socket";
 import { useNavigate } from "react-router";
-import alert from "../alert/alert";
+import axios from "axios";
 
 function FindFriendsWall() {
   const navigate = useNavigate();
@@ -36,7 +36,14 @@ function FindFriendsWall() {
     );
   }
 
-  if (allUsers.error) {
+  if (axios.isAxiosError(allUsers.error)) {
+    if (allUsers.error.response) {
+      if (!allUsers.error.response.data.auth) {
+        navigate("/login", { replace: true });
+        return;
+      }
+    }
+
     return (
       <section className="flex-1 flex md:justify-center">
         <ul className="h-full w-full md:w-[50%] flex flex-col gap-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-light) backdrop-blur-(--glass-blur) p-2">
@@ -58,7 +65,6 @@ function FindFriendsWall() {
     const data = allUsers.data.data.data;
 
     if (!allUsers.data.data.auth) {
-      alert("login to view the page");
       navigate("/login", { replace: true });
       return;
     }
