@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { Error, Header, UserComment } from "../../../types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getHeader, addCommentsApi } from "../../../utils/apis/putRequests";
+import notification from "../alert/notification";
 
 function CommentInput({ postId }: { postId: string }) {
   const header = getHeader();
@@ -31,7 +32,7 @@ function CommentInput({ postId }: { postId: string }) {
       return addCommentsApi({ commentData, postId, header });
     },
     onError: (error: Error) => {
-      alert(error.response.data.message);
+      notification(error.response.data.message);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post"] });

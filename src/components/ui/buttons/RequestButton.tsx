@@ -10,7 +10,7 @@ import {
   sendRequestApi,
   addFriendApi,
 } from "../../../utils/apis/postRequests";
-import alert from "../alert/alert";
+import notification from "../alert/notification";
 import ButtonFunc from "./ButtonFunc";
 
 function RequestButton({ user }: { user: FindFriendsUser | User }) {
@@ -24,7 +24,7 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     },
     onError: (error: Error) => {
       if (error) {
-        alert(error.response.data.message);
+        notification(error.response.data.message);
       }
     },
     onSuccess: () => {
@@ -40,7 +40,7 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     },
     onError: (error: Error) => {
       if (error) {
-        alert(error.response.data.message);
+        notification(error.response.data.message);
       }
     },
     onSuccess: () => {
@@ -65,7 +65,7 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     return (
       <ButtonFunc
         text="SEND REQUEST"
-        callback={(e) => {
+        callback={(e: React.MouseEvent) => {
           e.stopPropagation();
           handleSendRequest(user.id);
         }}
@@ -78,7 +78,7 @@ function RequestButton({ user }: { user: FindFriendsUser | User }) {
     return (
       <ButtonFunc
         text="ACCEPT REQUEST"
-        callback={(e) => {
+        callback={(e: React.MouseEvent) => {
           e.stopPropagation();
           handleAddFriend(user.id);
         }}

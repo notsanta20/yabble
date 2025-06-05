@@ -1,7 +1,7 @@
 import { getHeader, addLikeApi } from "../../../utils/apis/putRequests";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Error, Header } from "../../../types/types";
-import alert from "../alert/alert";
+import notification from "../alert/notification";
 
 function LikeButton({
   id,
@@ -21,7 +21,7 @@ function LikeButton({
       return addLikeApi({ id, header });
     },
     onError: (error: Error) => {
-      alert(error.response.data.message);
+      notification(error.response.data.message);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allPost"] });

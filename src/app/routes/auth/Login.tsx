@@ -9,7 +9,7 @@ import { HeadingLarge, FormHeading } from "../../../components/texts/Heading";
 import Input from "../../../components/ui/form/Input";
 import { ButtonSmall } from "../../../components/ui/buttons/Button";
 import { getHeader, loginApi } from "../../../utils/apis/postRequests";
-import alert from "../../../components/ui/alert/alert";
+import notification from "../../../components/ui/alert/notification";
 
 function Login() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function Login() {
     },
     onError: (error: Error) => {
       if (error) {
-        alert(error.response.data.message);
+        notification(error.response.data.message);
       }
     },
     onSuccess: (data) => {

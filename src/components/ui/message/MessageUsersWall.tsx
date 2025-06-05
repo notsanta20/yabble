@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { FriendList } from "../../../types/types";
-import alert from "../alert/alert";
+import notification from "../alert/notification";
 import MessageUser from "./MessageUser";
 import socket from "../../../app/socket";
 import ActiveUserLoader from "../loaders/ActiveUserLoader";
@@ -23,7 +23,7 @@ function MessageUsersWall({
   }, []);
 
   socket.on("error", (error) => {
-    alert(error);
+    notification(error);
   });
 
   function handleUserMenuHighlight(name: string) {
