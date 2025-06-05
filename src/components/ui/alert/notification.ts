@@ -1,4 +1,4 @@
-function alert(message: string) {
+function notification(message: string) {
   const main: HTMLElement | null = document.querySelector("main");
   const div: HTMLDivElement = document.createElement("div");
 
@@ -7,10 +7,10 @@ function alert(message: string) {
   div.textContent = message;
   main?.appendChild(div);
 
-  removeAlert(div);
+  removeNotification(div);
 }
 
-function removeAlert(child: HTMLDivElement) {
+function removeNotification(child: HTMLDivElement) {
   setTimeout(() => {
     child.classList.add("removeAlert");
   }, 3500);
@@ -19,4 +19,4 @@ function removeAlert(child: HTMLDivElement) {
   }, 5000);
 }
 
-export default alert;
+export default notification;
