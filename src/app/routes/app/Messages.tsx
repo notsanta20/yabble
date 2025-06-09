@@ -32,7 +32,7 @@ function Messages() {
               "flex-auto md:flex gap-2 " + (isPageClicked ? "flex" : "hidden")
             }
           >
-            <Outlet context={[setIsPageClicked]} />
+            <Outlet context={setIsPageClicked} />
           </section>
         </div>
       </div>
