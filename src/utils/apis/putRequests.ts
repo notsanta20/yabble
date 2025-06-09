@@ -7,7 +7,7 @@ import type {
   Message,
 } from "../../types/types";
 
-const url: string = "http://localhost:3000";
+const url: string = "https://yabble-api.onrender.com";
 
 export function getHeader() {
   const token: string | undefined = Cookies.get("token");
