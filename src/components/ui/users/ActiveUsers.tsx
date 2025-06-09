@@ -6,11 +6,17 @@ import { useEffect, useState } from "react";
 
 function ActiveUsers() {
   const [users, setUsers] = useState<Array<FriendList> | null>(null);
+  const [offline, setOffline] = useState<Boolean>(true);
 
   useEffect(() => {
     socket.emit("getUsers");
     socket.on("users", (data) => {
       setUsers(data);
+      data.forEach((user: FriendList) => {
+        if (user.isOnline) {
+          setOffline(false);
+        }
+      });
     });
   }, []);
 
@@ -28,7 +34,7 @@ function ActiveUsers() {
   }
 
   if (users) {
-    if (users.length === 0) {
+    if (users.length === 0 || offline) {
       return (
         <aside className="hidden md:flex flex-col gap-2 p-2 rounded-2xl border-2 border-(--glass-border-light) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) w-[220px]">
           <h1 className="font-[Syncopate] font-bold text-white text-xs text-center">
