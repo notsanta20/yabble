@@ -24,7 +24,7 @@ function Post() {
     return (
       <main className="flex flex-col gap-2 p-2 h-dvh">
         <HeadingSmall />
-        <section className="flex gap-2 h-full">
+        <section className="flex flex-col-reverse md:flex-row gap-2 h-full">
           <Menu name="post" />
           <PostLoader />
         </section>
