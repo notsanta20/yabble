@@ -1,5 +1,5 @@
 import { ButtonSmall } from "../buttons/Button";
-import { useState, type ChangeEvent, type RefObject } from "react";
+import { useRef, useState, type ChangeEvent, type RefObject } from "react";
 import Input from "../form/Input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,7 @@ import notification from "../alert/notification";
 function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
   const queryClient = useQueryClient();
   const [image, setImage] = useState<File | null>(null);
+  const inputLabelRef = useRef<HTMLLabelElement | null>(null);
   const header = getHeader();
   const {
     register,
@@ -57,6 +58,9 @@ function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
     if (file) {
       setImage(file);
       setValue("img", file);
+      if (inputLabelRef.current) {
+        inputLabelRef.current.textContent = file.name;
+      }
     }
   }
 
@@ -103,13 +107,21 @@ function PostModal({ ref }: { ref: RefObject<HTMLDialogElement | null> }) {
             ? ""
             : errors.description.message}
         </div>
+        <label
+          htmlFor="postImg"
+          ref={inputLabelRef}
+          className="font-[space_grotesk] p-2 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) outline-none focus:bg-(--glass-fill-white) text-center cursor-pointer"
+        >
+          Select Profile Pic
+        </label>
         <input
           {...register("img")}
           onChange={handleImgUpload}
           type="file"
           name="postImg"
+          id="postImg"
           accept="image/png, image/jpg"
-          className="font-[space_grotesk] p-2 rounded-2xl border-2 border-(--glass-border-dark) bg-(--glass-fill-dark) backdrop-blur-(--glass-blur) outline-none focus:bg-(--glass-fill-white)"
+          className="hidden"
         />
         <ButtonSmall name="Add Post" isPending={postData.isPending} />
       </form>
