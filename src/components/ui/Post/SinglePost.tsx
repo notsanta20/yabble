@@ -29,7 +29,11 @@ function SinglePost({ post }: { post: Post }) {
         {post.description && (
           <h3 className="text-md font-[dm_sans]">{post.description}</h3>
         )}
-        {post.image && <img src={post.image} alt="post-image" />}
+        <div className="flex justify-center max-h-[400px]">
+          {post.image && (
+            <img src={post.image} alt="post-image" className="w-auto h-full" />
+          )}
+        </div>
         <div className="flex gap-2">
           <LikeButton
             id={post.id}
