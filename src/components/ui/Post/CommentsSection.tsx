@@ -4,7 +4,7 @@ import CommentCard from "./CommentCard";
 function CommentsSection({ comments }: { comments: Array<CommentData> }) {
   if (comments.length === 0) {
     return (
-      <h2 className="flex-auto flex items-center justify-center text-white font-[Syncopate] text-xs font-bold">
+      <h2 className="flex-auto flex items-center justify-center text-white text-center font-[Syncopate] text-xs font-bold">
         No comments, be first to share what you think.
       </h2>
     );
