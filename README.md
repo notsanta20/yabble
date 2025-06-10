@@ -1,7 +1,7 @@
 <h3 align="center">Yabble</h3>
 
   <p align="center">
-      Yabble is a social media app where you can create and interact with posts from other users with other users. You can also send and receive friend requests from other users and can also DM them.This app uses RESTful APIs to connect with the backend server and it uses Socket.io for messages.
+      Yabble is a social media app where you can create and interact with posts from other users. You can also send and receive friend requests from other users and can also DM them.This app uses RESTful APIs to connect with the backend server and it uses Socket.io for messages.
     <br />
     <a href="https://yabble.vercel.app/">Live Demo</a>
   </p>
