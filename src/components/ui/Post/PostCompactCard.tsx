@@ -42,7 +42,7 @@ function PostCompact({ post }: { post: Post }) {
               alt="comment"
               className="w-[22px] h-auto"
             />
-            <div>{time + " ago"}</div>
+            <div className="line-clamp-1">{time + " ago"}</div>
           </div>
         </div>
       </div>
