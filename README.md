@@ -25,7 +25,7 @@
 
 ### API
 
-This app uses Restful APIs to get / post / put for posts, adding comments. It uses socket.io for messages. The source code for the API can be found at <a href="https://github.com/notsanta20/yabble_api">ChatterBox API</a>
+This app uses Restful APIs to get / post / put for posts, adding comments. It uses socket.io for messages. The source code for the API can be found at <a href="https://github.com/notsanta20/yabble_api">Yabble API</a>
 
 ### Built With
 
